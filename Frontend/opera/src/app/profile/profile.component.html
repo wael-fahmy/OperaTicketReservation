@@ -1,0 +1,107 @@
+<div class="container top-margin">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div *ngIf="!isLoading" class="page-header">
+    <h5> Profile </h5>
+    <div class="page-header-flex-div"></div>
+    <button mat-stroked-button color="primary" (click)="backButton()" *ngIf="enableBack"> Back </button>
+  </div>
+
+  <div *ngIf="!isThereUser && !isLoading && !serverError" class="error-or-none-found">
+    <span> No profile data available </span>
+  </div>
+
+  <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="ngOnInit()" class="button-top-down-margin"> Retry </button> <br>
+      If the error persists, please call technical support with error code ({{errorCode}})
+    </span>
+  </mat-card>
+
+  <!-- View Mode -->
+  <div class="user-info" *ngIf="isThereUser && viewMode && !isLoading && !serverError">
+    <div class="row">
+      <div class="col-lg-4 profile-main-data">
+        <div class="user-image" [style.background-image]="'url(' + userData?.photo + ')'"></div>
+        <div>
+          <h4>
+            {{userData?.firstName + ' ' + userData?.lastName || "—"}}
+          </h4>
+          <p mat-line> {{userData?.email || "—"}}</p>
+          <p mat-line *ngIf="!userData?.userStatus"> — </p>
+        </div>
+        <!-- <div class="edit-button-container">
+          <button mat-stroked-button color="primary" (click)="edit()" *ngIf="enableEdit"> Edit Profile </button>
+        </div> -->
+      </div>
+
+      <div class="col-sm">
+        <mat-list>
+          <mat-list-item>
+            <mat-icon mat-list-icon>cake</mat-icon>
+            <h4 mat-line> Birthdate </h4>
+            <p mat-line> {{(userData?.birthDate | date)  || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>domain</mat-icon>
+            <h4 mat-line> Country </h4>
+            <p mat-line> {{userData?.country || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>location_cityy</mat-icon>
+            <h4 mat-line> City </h4>
+            <p mat-line> {{userData?.city || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>phone</mat-icon>
+            <h4 mat-line> Contact Number </h4>
+            <p mat-line> {{userData?.contactNumber || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>group</mat-icon>
+            <h4 mat-line> Gender </h4>
+            <p mat-line *ngIf="userData?.gender === 'M'"> Male </p>
+            <p mat-line *ngIf="userData?.gender === 'F'"> Female </p>
+            <p mat-line *ngIf="!userData?.gender"> — </p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="col-sm">
+        <mat-list>
+          <mat-list-item>
+            <mat-icon mat-list-icon>work</mat-icon>
+            <h4 mat-line> Authority </h4>
+            <p mat-line *ngIf="userData?.authority === 1"> Manager </p>
+            <p mat-line *ngIf="userData?.authority === 2"> Paramedic </p>
+            <p mat-line *ngIf="userData?.authority === 3"> Driver </p>
+            <p mat-line *ngIf="userData?.authority === 4"> admin </p>
+            <p mat-line *ngIf="!userData?.authority"> — </p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>backup</mat-icon>
+            <h4 mat-line> Last Login </h4>
+            <p mat-line> {{(userData?.logInStamp | date:'medium') || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>credit_card</mat-icon>
+            <h4 mat-line> National ID </h4>
+            <p mat-line> {{userData?.nationalID || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>credit_card</mat-icon>
+            <h4 mat-line> PAN </h4>
+            <p mat-line> {{userData?.pan || "—"}}</p>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon>verified_user</mat-icon>
+            <h4 mat-line> Signed Up in </h4>
+            <p mat-line> {{(userData?.subscriptionDate | date:'medium') || "—"}}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>

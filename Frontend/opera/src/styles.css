@@ -1,1 +1,172 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "assets/css/all.css";
+
+@font-face {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-display: auto;
+  src: local("Segoe UI"), local("Open Sans"),
+    local("assets/webfonts/fa-brands-400.woff"),
+    local("assets/webfonts/fa-brands-400.woff2"),
+    local("assets/webfonts/fa-regular-400.woff"),
+    local("assets/webfonts/fa-regular-400.woff2"),
+    local("assets/webfonts/fa-solid-900.woff"),
+    local("assets/webfonts/fa-solid-900.woff2");
+  font-display: swap;
+}
+
+.my-dialog .mat-dialog-container {
+  padding: 30px 30px;
+  text-align: center;
+  width: 400px;
+  word-wrap: break-word;
+}
+
+.my-dialog .mat-dialog-container button {
+  padding: 0 40px;
+}
+
+.select-margin {
+  margin-top: 30px !important;
+}
+
+*:not(mat-icon) {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  word-wrap: break-word;
+}
+
+.width-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.top-margin {
+  cursor: default;
+  margin-top: 20px;
+}
+
+.card-border {
+  border: 1px solid #dfe1e5;
+  -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.warning-card {
+  background-color: #aa0000 !important;
+  color: #ffffff;
+  -webkit-animation-name: warning-card !important;
+  animation-name: warning-card !important;
+  -webkit-animation-duration: 1s !important;
+  animation-duration: 1s !important;
+  -webkit-animation-delay: 0s !important;
+  animation-delay: 0s !important;
+  -webkit-animation-iteration-count: infinite !important;
+  animation-iteration-count: infinite !important;
+  -webkit-animation-timing-function: ease-in-out !important;
+  animation-timing-function: ease-in-out !important;
+  -webkit-animation-direction: alternate !important;
+  animation-direction: alternate !important;
+}
+
+@-webkit-keyframes warning-card {
+  from {
+    color: #ffffff88;
+  }
+  to {
+    color: #ffffff;
+  }
+}
+
+@keyframes warning-card {
+  from {
+    color: #ffffff88;
+  }
+  to {
+    color: #ffffff;
+  }
+}
+
+mat-spinner {
+  margin: 2px auto !important;
+  width: 100px !important;
+}
+
+mat-error {
+  margin: 0 0 5px 0 !important;
+}
+
+.mat-form-field,
+h3,
+h4 {
+  line-height: unset !important;
+}
+
+.align-text-left {
+  text-align: left !important;
+}
+
+.align-text-right {
+  text-align: right !important;
+}
+
+.align-text-center {
+  text-align: center !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.float-left {
+  float: left !important;
+}
+
+.page-header {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.error-or-none-found {
+  margin-top: 10px !important;
+  text-align: center !important;
+}
+
+.button-top-down-margin {
+  margin: 10px 0 !important;
+}
+
+.page-header-flex-div {
+  -webkit-box-flex: 1 !important;
+  -ms-flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
+}
+
+.color-red {
+  color: #ff0000 !important;
+}
+
+.validate-and-send-button {
+  background-color: #008000 !important;
+  color: #ffffff !important;
+}
+
+.reset-button {
+  background-color: #ff0000 !important;
+  color: #ffffff !important;
+}
+
+mat-horizontal-stepper {
+  background-color: #fafafa !important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

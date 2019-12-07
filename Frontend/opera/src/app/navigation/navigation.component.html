@@ -1,0 +1,89 @@
+<div class="nav-container" [class.is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="nav-toolbar">
+    <div class="aea">
+      <p>CUFE Opera House</p>
+    </div>
+
+    <!-- Hamburger (Sidenav Menu) Button -->
+    <button mat-icon-button (click)="snav.toggle()" *ngIf="userIsAuthenticated" aria-label="Side Menu Button">
+      <mat-icon class="hamburger-button">menu</mat-icon>
+    </button>
+
+    <!-- Home Button -->
+    <button mat-icon-button (click)="snav.close()" [routerLink]="['/']" aria-label="Home Button">
+      <mat-icon class="hamburger-button">home</mat-icon>
+    </button>
+
+    <div class="separating-div">
+      <!-- <p>Ambulance Egyptian Authority</p>-->
+    </div>
+
+    <!-- Signin and Signup Buttons (If user is logged out) -->
+    <div class="nav-links" *ngIf="!userIsAuthenticated">
+      <a mat-button [routerLink]="['/auth/signin']">Sign In</a>
+      <a mat-button [routerLink]="['/auth/signup']">Sign Up</a>
+    </div>
+  </mat-toolbar>
+
+  <!-- Side Navigation -->
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="'over'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list (click)="snav.close()">
+        <a mat-list-item [routerLink]="['/']"><i class="material-icons"> home </i> Home </a>
+        <mat-divider></mat-divider>
+
+        <div *ngIf="admin">
+          <a mat-list-item [routerLink]="['/admin/approve-authority']"><i class="material-icons">how_to_reg</i> Approve
+            Authority </a>
+          <a mat-list-item [routerLink]="['/admin/remove-users']"><i class="material-icons">cancel</i> Remove Users
+          </a>
+          <a mat-list-item [routerLink]="['/admin/update-authority']"><i class="material-icons">update</i> Update
+            User Authority </a>
+        </div>
+
+        <div *ngIf="manager">
+          <a mat-list-item [routerLink]="['/manager/create-events']"><i class="material-icons">event</i> Create
+            Events </a>
+          <a mat-list-item [routerLink]="['/manager/manage-events']"><i class="material-icons">event_note</i> Manage
+            Events </a>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['/manager/create-halls']"><i class="material-icons">house</i> Create Halls
+          </a>
+          <a mat-list-item [routerLink]="['/manager/edit-halls']"><i class="material-icons">event_seat</i> Edit Halls
+          </a>
+          <!-- <a mat-list-item [routerLink]="['/manager/view-event-seats']"><i class="material-icons">dashboard</i> View Event Seats </a> -->
+        </div>
+
+        <div style="flex: 1 1 auto;"></div>
+
+        <a mat-list-item [routerLink]="['/profile', userID]"><i class="material-icons">perm_identity</i> Profile </a>
+
+        <a mat-list-item (click)="snav.close()" (click)="signout()"><i class="material-icons">lock</i> Sign Out </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+      <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found container">
+        <span>
+          An error occured while communicating with the server. <br>
+          Please retry again later. <br>
+          <button mat-raised-button color="warn" (click)="serverError = !serverError" class="button-top-down-margin">
+            Retry </button>
+          <br>
+          If the error persists, please call technical support with error code ({{errorCode}})
+        </span>
+      </mat-card>
+
+      <div [hidden]="isLoading || serverError">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="navigation-margin"></div>
+
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>

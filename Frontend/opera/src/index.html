@@ -1,13 +1,72 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>Opera</title>
+  <title>CUFE Opera House</title>
   <base href="/">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A website for CUFE's upcoming opera house">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+  <script
+    src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- Bootstrap CSS local fallback -->
+  <script>
+    var test = document.createElement("div")
+    test.className = "hidden d-none"
+
+    document.head.appendChild(test)
+    var cssLoaded = window.getComputedStyle(test).display === "none"
+    document.head.removeChild(test)
+
+    if (!cssLoaded) {
+      var link = document.createElement("link");
+
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      link.href = "assets/css/bootstrap.min.css";
+
+      document.head.appendChild(link);
+    }
+  </script>
+  <meta name="theme-color" content="#3f51b5">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <app-root></app-root>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <!-- jQuery local fallback -->
+  <script>window.jQuery || document.write('<script src="assets/js/jquery-3.4.1.slim.min.js"><\/script>')</script>
+
+  <!-- Popper.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <!-- Popper.js Fallback -->
+  <script>window.Popper || document.write('<script src="assets/js/popper.min.js"><\/script>')</script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS local fallback -->
+  <script>
+    if (typeof ($.fn.modal) === 'undefined') { document.write('<script src="assets/js/bootstrap.min.js"><\/script>') }
+  </script>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
+
 </html>

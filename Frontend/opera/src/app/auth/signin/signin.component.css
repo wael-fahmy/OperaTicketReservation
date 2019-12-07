@@ -1,0 +1,71 @@
+mat-error,
+mat-hint,
+mat-icon {
+  cursor: default;
+}
+
+input {
+  height: 100%;
+}
+
+.form-container {
+  width: 500px;
+  margin: 20px auto 0 auto;
+}
+
+.form-design {
+  text-align: center;
+}
+
+.form-logo {
+  background-image: url("../../../assets/images/logo/logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 150px;
+  height: 50px;
+  margin: 20px auto !important;
+}
+
+.form-design p {
+  font-size: 1.3rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: 10px 0 0 0;
+}
+
+.form-controls {
+  align-items: center;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.form-controls a:hover {
+  text-decoration: none;
+  color: #0000ff;
+}
+
+.form-controls div {
+  padding: 0;
+}
+
+.button-container button {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+@media only screen and (max-width: 516px) {
+  .form-container {
+    width: 90%;
+  }
+
+  .form-logo {
+    width: 40%;
+  }
+}

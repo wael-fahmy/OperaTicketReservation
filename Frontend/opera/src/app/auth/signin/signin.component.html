@@ -1,0 +1,54 @@
+<div class="container top-margin" *ngIf="serverError && !isLoading">
+
+  <div *ngIf="!isLoading" class="page-header">
+    <h5> Sign In </h5>
+  </div>
+
+  <mat-card class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="ngOnInit()" class="button-top-down-margin"> Retry </button> <br>
+      If the error persists, please call technical support with error code ({{errorCode}}).
+    </span>
+  </mat-card>
+</div>
+
+<mat-card class="form-container card-border" [hidden]="serverError">
+  <div class="form-logo"></div>
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form (submit)="signin(signinForm)" #signinForm="ngForm" [hidden]="isLoading">
+    <div class="form-design">
+      <p> Sign In </p>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput name="email" ngModel #emailInput="ngModel" required>
+      <mat-hint align="end">{{emailInput.value?.length || 0}}/20</mat-hint>
+      <mat-error *ngIf="emailInput.invalid"> Wrong Email or Not a valid Format
+      </mat-error>
+      <mat-icon matSuffix>email</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input [type]="hide ? 'password' : 'text'" matInput name="password" ngModel #passwordInput="ngModel" required>
+      <mat-error *ngIf="passwordInput.invalid"> Wrong Password or Minimum 8 Characters </mat-error>
+      <mat-icon mat-icon-button matSuffix (click)="hide = !hide" class="cursor-pointer"
+        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+
+    <div class="form-controls row">
+      <div class="col">
+        <a [routerLink]="['/signup']"> Not a member? </a>
+      </div>
+      <div class="col button-container">
+        <button mat-stroked-button color="primary" class="float-right"> Sign In </button>
+      </div>
+    </div>
+  </form>
+</mat-card>
