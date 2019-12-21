@@ -14,14 +14,16 @@
       <mat-icon class="hamburger-button">home</mat-icon>
     </button>
 
-    <div class="separating-div">
-      <!-- <p>Ambulance Egyptian Authority</p>-->
-    </div>
+    <div class="separating-div"></div>
 
     <!-- Signin and Signup Buttons (If user is logged out) -->
     <div class="nav-links" *ngIf="!userIsAuthenticated">
       <a mat-button [routerLink]="['/auth/signin']">Sign In</a>
       <a mat-button [routerLink]="['/auth/signup']">Sign Up</a>
+    </div>
+	
+	<div class="nav-links">
+      <a mat-button>Contact Us</a>
     </div>
   </mat-toolbar>
 
