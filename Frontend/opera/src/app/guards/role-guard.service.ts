@@ -23,19 +23,22 @@ export class RoleGuard implements CanActivate {
     } catch (error) {
       authorityCheck = '';
     }
-    if (authority === '-1') {
-      switch (authorityCheck) {
-        case '1': // Manager
-          this.router.navigate(['/']);
-          break;
-        case '0': // admin
-          this.router.navigate(['/']);
-          break;
-        default:
-          this.router.navigate(['/']);
-          break;
-      }
-    } else if (authorityCheck !== authority) {
+    // if (authority === '-1') {
+    //   switch (authorityCheck) {
+    //     case '1': // Manager
+    //       this.router.navigate(['/']);
+    //       break;
+    //     case '0': // admin
+    //       this.router.navigate(['/']);
+    //       break;
+    //     default:
+    //       this.router.navigate(['/']);
+    //       break;
+    //   }
+    // } else if (authorityCheck !== authority) {
+    //   this.router.navigate(['/']);
+    // }
+    if (authorityCheck !== authority) {
       this.router.navigate(['/']);
     }
     return true;

@@ -208,9 +208,9 @@ export class AuthService {
 
   // TODO: Send token instead of dummyTokn
   signout() {
-    let dummyToken;
+    let token = '';
     try {
-      dummyToken = localStorage.getItem('token').split(',')[0];
+      token = localStorage.getItem('token');
     } catch (error) {
       this.isAuthenticated = false;
       this.authority = '';
@@ -223,7 +223,7 @@ export class AuthService {
       this.router.navigate(['/']);
       return;
     }
-    this.http.post<ServerResponse>(BACKEND_URL + '/logout', { userID: dummyToken })
+    this.http.post<ServerResponse>(BACKEND_URL + '/logout', { userID: token })
       .subscribe(response => {
         if (response.responseHexCode === '00') {
           this.isAuthenticated = false;

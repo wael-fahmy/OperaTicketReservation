@@ -18,12 +18,12 @@
 
     <!-- Signin and Signup Buttons (If user is logged out) -->
     <div class="nav-links" *ngIf="!userIsAuthenticated">
-      <a mat-button [routerLink]="['/auth/signin']">Sign In</a>
-      <a mat-button [routerLink]="['/auth/signup']">Sign Up</a>
+      <a mat-button [routerLink]="['/signin']">Sign In</a>
+      <a mat-button [routerLink]="['/signup']">Sign Up</a>
     </div>
-	
-	<div class="nav-links">
-      <a mat-button>Contact Us</a>
+
+    <div class="nav-links" *ngIf="userIsAuthenticated">
+      <a mat-button (click)="signout()">Sign Out</a>
     </div>
   </mat-toolbar>
 
@@ -35,23 +35,19 @@
         <mat-divider></mat-divider>
 
         <div *ngIf="admin">
-          <a mat-list-item [routerLink]="['/admin/approve-authority']"><i class="material-icons">how_to_reg</i> Approve
-            Authority </a>
-          <a mat-list-item [routerLink]="['/admin/remove-users']"><i class="material-icons">cancel</i> Remove Users
+          <a mat-list-item [routerLink]="['/manage-users']"><i class="material-icons">how_to_reg</i> Approve Authority
           </a>
-          <a mat-list-item [routerLink]="['/admin/update-authority']"><i class="material-icons">update</i> Update
-            User Authority </a>
         </div>
 
         <div *ngIf="manager">
-          <a mat-list-item [routerLink]="['/manager/create-events']"><i class="material-icons">event</i> Create
+          <a mat-list-item [routerLink]="['/create-event']"><i class="material-icons">event</i> Create
             Events </a>
-          <a mat-list-item [routerLink]="['/manager/manage-events']"><i class="material-icons">event_note</i> Manage
+          <a mat-list-item [routerLink]="['/manage-events']"><i class="material-icons">event_note</i> Manage
             Events </a>
           <mat-divider></mat-divider>
-          <a mat-list-item [routerLink]="['/manager/create-halls']"><i class="material-icons">house</i> Create Halls
+          <a mat-list-item [routerLink]="['/create-hall']"><i class="material-icons">house</i> Create Halls
           </a>
-          <a mat-list-item [routerLink]="['/manager/edit-halls']"><i class="material-icons">event_seat</i> Edit Halls
+          <a mat-list-item [routerLink]="['/edit-hall']"><i class="material-icons">event_seat</i> Edit Halls
           </a>
           <!-- <a mat-list-item [routerLink]="['/manager/view-event-seats']"><i class="material-icons">dashboard</i> View Event Seats </a> -->
         </div>

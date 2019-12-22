@@ -1,7 +1,7 @@
 <app-navigation>
-  <mat-progress-bar [mode]="'indeterminate'" *ngIf='isLoading'></mat-progress-bar>
+  <!-- <mat-progress-bar [mode]="'indeterminate'" *ngIf='isLoading'></mat-progress-bar> -->
 
-  <router-outlet *ngIf='!isLoading && isOnline && !serverError'></router-outlet>
+  <router-outlet></router-outlet>
 
   <mat-card *ngIf="!isOnline && showWarning && !serverError" class="warning-card error-or-none-found container">
     <span>

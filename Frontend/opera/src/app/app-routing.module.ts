@@ -4,32 +4,74 @@ import { NotSignedInGuard } from './guards/not-signedin-guard.service';
 import { RoleGuard } from './guards/role-guard.service';
 import { Routes, RouterModule } from '@angular/router';
 import { SignedInGuard } from './guards/signedin-guard.service';
+import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { CreateEventsComponent } from './pages/manager/create-events/create-events.component';
+import { CreateHallsComponent } from './pages/manager/create-halls/create-halls.component';
+import { EditEventComponent } from './pages/manager/edit-event/edit-event.component';
+import { EditHallComponent } from './pages/manager/edit-hall/edit-hall.component';
+import { ManageEventsComponent } from './pages/manager/manage-events/manage-events.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
   },
+  // Guest
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule),
+    path: 'signin',
+    component: SigninComponent,
     canActivate: [NotSignedInGuard]
   },
   {
-    path: 'manager',
-    loadChildren: () => import('./pages/manager/manager.module').then(mod => mod.ManagerModule),
+    path: 'signup',
+    component: SignupComponent,
+    canActivate: [NotSignedInGuard]
+  },
+  // Admin
+  {
+    path: 'manage-users',
+    component: ManageUsersComponent,
+    canActivate: [RoleGuard],
+    data: { authority: '0' }
+  },
+  // Manager
+  {
+    path: 'create-event',
+    component: CreateEventsComponent,
     canActivate: [RoleGuard],
     data: { authority: '1' }
   },
   {
-    path: 'admin',
-    loadChildren: () => import('./pages/admin/admin.module').then(mod => mod.AdminModule),
+    path: 'create-hall',
+    component: CreateHallsComponent,
     canActivate: [RoleGuard],
-    data: { authority: '0' }
+    data: { authority: '1' }
   },
   {
+    path: 'edit-event',
+    component: EditEventComponent,
+    canActivate: [RoleGuard],
+    data: { authority: '1' }
+  },
+  {
+    path: 'edit-hall',
+    component: EditHallComponent,
+    canActivate: [RoleGuard],
+    data: { authority: '1' }
+  },
+  {
+    path: 'manage-events',
+    component: ManageEventsComponent,
+    canActivate: [RoleGuard],
+    data: { authority: '1' }
+  },
+  // Customer
+  {
     path: 'profile/:uid',
-    loadChildren: () => import('./profile/profile.module').then(mod => mod.ProfileModule),
+    component: ProfileComponent,
     canActivate: [SignedInGuard]
   },
   {
