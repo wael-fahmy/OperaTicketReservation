@@ -1,3 +1,7 @@
+a {
+  cursor: pointer;
+}
+
 .footer {
   -webkit-box-direction: normal;
   -webkit-box-orient: horizontal;
