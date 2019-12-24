@@ -58,6 +58,27 @@ connection.query(sql,(err, rows )=>
 })
 
 
+router.post('/Update', async (req, res) => {
+  Id = req.body.Id;
+  Event_Name =req.body.Event_Name
+  Event_Description =req.body.Event_Description 
+  Event_Poster =req.body.Event_Poster
+  Event_Date=req.body.Event_DateTime
+  Hall_Number=req.body.Hall_Number
+
+  let sql = "CAll UpdateEvent(" + Id +  ","+ Event_Name + "," + Event_Description + "," + Event_Poster + "," + Event_DateTime + "," + Hall_Number+")"
+  db.query(sql,(err, rows )=>
+{   if(err)
+  {
+    res.status(400).send("something went wrong")      
+  }
+
+   res.status(200).send("added Successfully")
+ // console.log (rows)
+})
+})
+
+
 // delete event 
 
 router.post('/delete', async (req, res) => {
