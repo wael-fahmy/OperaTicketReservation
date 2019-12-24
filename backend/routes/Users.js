@@ -1,5 +1,4 @@
 const isImageUrl = require('is-image-url');
-const auth = require('../middleware/auth');
 //const sendgrid = require('sendgrid');
 //const sgMail = require('@sendgrid/mail');
 const express = require('express');
@@ -43,7 +42,7 @@ router.post("/SignUp", function(req, res)
   });
 });
 
-router.post("/SignIn", auth, function(req, res) {
+router.post("/SignIn", function(req, res) {
   query = "CALL SignIn(?,?);"
   myTable = [
     req.body["UserName"],
@@ -57,7 +56,7 @@ router.post("/SignIn", auth, function(req, res) {
     } else {
       
       if (rows[0][0].response != 0){
-        return res.status(403).send({ auth: false, message: "Wrong User Credentials!" });
+        return res.status(403).send({  message: "Wrong User Credentials!" });
       }else{
         //Send the response = 0  and all user data
         res.status(200).send({ response: rows[0][0].response, userData: rows[1][0] });
@@ -70,7 +69,7 @@ router.post("/SignIn", auth, function(req, res) {
 
 
 
-router.post("/DeleteUser", auth, function(req, res)
+router.post("/DeleteUser", function(req, res)
 {
   query = "CALL DeleteUser(?);"
   myTable = 
@@ -108,7 +107,7 @@ router.all("/GetVerifiedUser", function(req, res)
   });
 });
 
-router.all("/GetNonVerifiedUser", auth, function(req, res)
+router.all("/GetNonVerifiedUser", function(req, res)
  {
   query = 'CALL GetNonVerifiedUser();'
   db.query(query, function(err, rows)
@@ -125,7 +124,7 @@ router.all("/GetNonVerifiedUser", auth, function(req, res)
 });
 
 
-router.all("/VerifyUser", auth, function(req, res) {
+router.all("/VerifyUser", function(req, res) {
   query = "CALL VerifyUser(?);"
   var userID = req.body["id"];
   query = mysql.format(query, userID);
@@ -141,7 +140,7 @@ router.all("/VerifyUser", auth, function(req, res) {
 
 //Update User Information (Name, Photo, Bithdate)
 
-router.post('/UpdateUserInfo', auth, async (req, res) => {
+router.post('/UpdateUserInfo', async (req, res) => {
   query = "CALL AddUser(?,?,?,?,?,?,?,?,?,?);"
   if (!(req.body["userAddress"]))
  {

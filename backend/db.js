@@ -5,9 +5,7 @@ const db = mysql.createConnection(
         host : 'localhost',
         user : 'root',
         database : 'Opera_Reservation_System'
-    }
-)
-
+    })
 function connectDatabase()
 {
     db.connect((err)=>
