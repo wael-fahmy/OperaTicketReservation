@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginData, SignUpData, SignInResponse, ServerResponse } from './auth-data.model';
+import { LoginData, SignUpData, SignInResponse } from './auth-data.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -14,10 +14,8 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class AuthService {
   private isAuthenticated = false;
-  private token: string;
-  private tokenTimer: any;
-  private userID: string;
-  private authority: string;
+  authority: string;
+  userID: string;
   dialogRef: MatDialogRef<ErrorComponent>;
   serverErrorLogin: boolean;
   serverErrorLogout: boolean;
@@ -28,18 +26,14 @@ export class AuthService {
 
   // Is the user authenticated or not
   private authStatusListener = new Subject<boolean>();
-
-  // Type of user
   private authAuthorityListener = new Subject<string>();
-
-  // User ID
   private userIDListener = new Subject<string>();
 
   // To get success messages in component
   private signinUpdated = new Subject<SignInResponse>();
 
   // To get success messages in component
-  private signupUpdated = new Subject<ServerResponse>();
+  private signupUpdated = new Subject<any>();
 
   // Login API can't reach the server
   private serverErrorLoginListener = new Subject<boolean>();
@@ -54,10 +48,6 @@ export class AuthService {
   private errorCodeSignUpListener = new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
-
-  getToken() {
-    return this.token;
-  }
 
   getIsAuth() {
     return this.isAuthenticated;
@@ -115,13 +105,9 @@ export class AuthService {
     return this.signupUpdated.asObservable();
   }
 
-  allCountries() {
-    return this.http.get('assets/countries.json');
-  }
-
   signup(user: SignUpData) {
     const authData: SignUpData = user;
-    return this.http.post<ServerResponse>(BACKEND_URL + '/signup', authData)
+    return this.http.post<any>(BACKEND_URL + '/signup', authData)
       .subscribe(response => {
         this.authStatusListener.next(false);
         this.authAuthorityListener.next('');
@@ -136,18 +122,10 @@ export class AuthService {
         this.router.navigate(['/']);
       }, error => {
         console.log(error);
-        if (error.error.responseHexCode) {
-          this.errorCodeSignUp = error.error.responseHexCode + ' - ' + error.error.responseMsg;
-          this.errorCodeSignUpListener.next(error.error.responseHexCode);
-          this.serverErrorSignUp = true;
-          this.serverErrorSignUpListener.next(true);
-        } else {
-          // Can't Reach Server
-          this.errorCodeSignUp = 'A01001003000';
-          this.errorCodeSignUpListener.next('A01001003000');
-          this.serverErrorSignUp = true;
-          this.serverErrorSignUpListener.next(true);
-        }
+        this.errorCodeSignUp = 'A01001003000';
+        this.errorCodeSignUpListener.next('A01001003000');
+        this.serverErrorSignUp = true;
+        this.serverErrorSignUpListener.next(true);
         this.authStatusListener.next(false);
         this.authAuthorityListener.next('');
         this.userIDListener.next('');
@@ -155,34 +133,25 @@ export class AuthService {
       );
   }
 
-  // TODO: Add token expiration
   signin(email: string, password: string) {
     const authData: LoginData = { email, password };
     return this.http.post<SignInResponse>(BACKEND_URL + '/login', authData)
       .subscribe(response => {
-        const token = response.token;
-        this.token = token;
-        if (token && response.responseHexCode === '00') {
+        if (response.user.ID) {
           // const expiresInDuration = response.expiresIn;
           // this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
-          this.authority = response.authority;
-          this.userID = response.userID;
+          this.authority = response.user.Title;
+          this.userID = response.user.ID.toString();
           this.authStatusListener.next(true);
-          this.authAuthorityListener.next(response.authority);
-          this.userIDListener.next(response.userID);
+          this.authAuthorityListener.next(response.user.Title);
+          this.userIDListener.next(response.user.ID.toString());
 
           this.serverErrorLogin = false;
           this.serverErrorLoginListener.next(false);
           this.errorCodeLogin = '';
           this.errorCodeLoginListener.next('');
-          // const now = new Date();
-          // const expirationDate = new Date(
-          //   now.getTime() + expiresInDuration * 1000
-          // );
-          // console.log(expirationDate);
-          // this.saveAuthData(token, expirationDate, this.userID);
-          this.saveAuthData(token, this.authority, this.userID);
+          this.saveAuthData(response.user);
           this.router.navigate(['/']);
         }
       }, error => {
@@ -206,11 +175,11 @@ export class AuthService {
       );
   }
 
-  // TODO: Send token instead of dummyTokn
   signout() {
-    let token = '';
+    let ID = '';
     try {
-      token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      ID = JSON.parse(user).ID;
     } catch (error) {
       this.isAuthenticated = false;
       this.authority = '';
@@ -218,12 +187,12 @@ export class AuthService {
       this.authStatusListener.next(false);
       this.authAuthorityListener.next('');
       this.userIDListener.next('');
-      clearTimeout(this.tokenTimer);
       this.clearAuthData();
       this.router.navigate(['/']);
       return;
     }
-    this.http.post<ServerResponse>(BACKEND_URL + '/logout', { userID: token })
+    // TODO:
+    this.http.post<any>(BACKEND_URL + '/logout', { ID })
       .subscribe(response => {
         if (response.responseHexCode === '00') {
           this.isAuthenticated = false;
@@ -232,7 +201,6 @@ export class AuthService {
           this.authStatusListener.next(false);
           this.authAuthorityListener.next('');
           this.userIDListener.next('');
-          clearTimeout(this.tokenTimer);
           this.clearAuthData();
 
           this.serverErrorLogout = false;
@@ -270,7 +238,6 @@ export class AuthService {
             this.authStatusListener.next(false);
             this.authAuthorityListener.next('');
             this.userIDListener.next('');
-            clearTimeout(this.tokenTimer);
             this.clearAuthData();
 
             this.serverErrorLogout = false;
@@ -297,7 +264,6 @@ export class AuthService {
     this.authStatusListener.next(false);
     this.authAuthorityListener.next('');
     this.userIDListener.next('');
-    clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
     return;
@@ -310,50 +276,41 @@ export class AuthService {
     }
     // const now = new Date();
     // const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
-    const expiresIn = 1;
-    if (expiresIn > 0) {
-      this.token = authInformation.token;
-      this.isAuthenticated = true;
-      this.authority = authInformation.authority;
-      this.userID = authInformation.userID;
-      // this.setAuthTimer(expiresIn / 1000);
-      this.authStatusListener.next(true);
-      this.authAuthorityListener.next(this.authority.toString());
-      this.userIDListener.next(this.userID.toString());
-    }
+    this.isAuthenticated = true;
+    this.authority = authInformation.authority;
+    this.userID = authInformation.userID;
+    // this.setAuthTimer(expiresIn / 1000);
+    this.authStatusListener.next(true);
+    this.authAuthorityListener.next(this.authority.toString());
+    this.userIDListener.next(this.userID.toString());
   }
 
   // Save user data to local storage
-  private saveAuthData(token: string, authority: string, userID: string) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('authority', authority);
-    localStorage.setItem('userID', userID);
+  private saveAuthData(user) {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   // Remove user data from local storage
   private clearAuthData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('authority');
-    localStorage.removeItem('userID');
+    localStorage.removeItem('user');
   }
 
   // Get user data from local storage
   private getAuthData() {
-    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     let authority = '';
     let userID = '';
     try {
-      authority = localStorage.getItem('authority').toString();
-      userID = localStorage.getItem('userID').toString();
+      authority = JSON.parse(user).Title;
+      userID = JSON.parse(user).ID.toString();
     } catch (error) {
       authority = '';
       userID = '';
     }
-    if (!token || !authority || !userID) {
+    if (!authority || !userID) {
       return;
     }
     return {
-      token,
       authority,
       userID,
     };

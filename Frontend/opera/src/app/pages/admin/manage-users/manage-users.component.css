@@ -1,0 +1,49 @@
+
+
+.view-employee {
+  margin-top: 10px;
+}
+
+.form-width {
+  width: 100%;
+  margin-top: 10px;
+}
+
+tr.data:hover {
+  background: #d0d0d0;
+}
+
+table {
+  width: 100%;
+  overflow: auto;
+}
+
+.table-overflow {
+  width: 100%;
+  overflow: auto;
+}
+
+mat-paginator {
+  width: 100%;
+}
+
+td.mat-cell,
+th.mat-header-cell {
+  padding: 0 10px !important;
+}
+
+.employee-img {
+  height: 50px;
+  width: 50px;
+  transition: transform 0.2s;
+}
+
+.employee-img:hover {
+  -ms-transform: scale(3); /* IE 9 */
+  -webkit-transform: scale(3); /* Safari 3-8 */
+  transform: scale(3);
+}
+
+button {
+  margin-bottom: 10px;
+}

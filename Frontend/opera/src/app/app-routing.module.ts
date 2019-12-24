@@ -35,38 +35,38 @@ const routes: Routes = [
     path: 'manage-users',
     component: ManageUsersComponent,
     canActivate: [RoleGuard],
-    data: { authority: '0' }
+    data: { authority: 'Site_Administrator' }
   },
   // Manager
   {
     path: 'create-event',
     component: CreateEventsComponent,
     canActivate: [RoleGuard],
-    data: { authority: '1' }
+    data: { authority: 'Opera_Management' }
   },
   {
     path: 'create-hall',
     component: CreateHallsComponent,
     canActivate: [RoleGuard],
-    data: { authority: '1' }
+    data: { authority: 'Opera_Management' }
   },
   {
     path: 'edit-event',
     component: EditEventComponent,
     canActivate: [RoleGuard],
-    data: { authority: '1' }
+    data: { authority: 'Opera_Management' }
   },
   {
     path: 'edit-hall',
     component: EditHallComponent,
     canActivate: [RoleGuard],
-    data: { authority: '1' }
+    data: { authority: 'Opera_Management' }
   },
   {
     path: 'manage-events',
     component: ManageEventsComponent,
     canActivate: [RoleGuard],
-    data: { authority: '1' }
+    data: { authority: 'Opera_Management' }
   },
   // Customer
   {

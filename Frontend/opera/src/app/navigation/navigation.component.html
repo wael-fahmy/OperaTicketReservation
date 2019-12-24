@@ -35,7 +35,7 @@
         <mat-divider></mat-divider>
 
         <div *ngIf="admin">
-          <a mat-list-item [routerLink]="['/manage-users']"><i class="material-icons">how_to_reg</i> Approve Authority
+          <a mat-list-item [routerLink]="['/manage-users']"><i class="material-icons">how_to_reg</i> Manage Users
           </a>
         </div>
 
@@ -50,6 +50,10 @@
           <a mat-list-item [routerLink]="['/edit-hall']"><i class="material-icons">event_seat</i> Edit Halls
           </a>
           <!-- <a mat-list-item [routerLink]="['/manager/view-event-seats']"><i class="material-icons">dashboard</i> View Event Seats </a> -->
+        </div>
+
+        <div *ngIf="customer">
+          <a mat-list-item [routerLink]="['/cancel-reservation']"><i class="material-icons">how_to_reg</i> Cancel Reservation </a>
         </div>
 
         <div style="flex: 1 1 auto;"></div>

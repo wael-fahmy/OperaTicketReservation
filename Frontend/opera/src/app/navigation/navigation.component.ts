@@ -31,6 +31,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   // Types to show HTML accordingly
   admin = false;
   manager = false;
+  customer = false;
 
   // Is the main component loading?
   isLoading = false;
@@ -46,14 +47,17 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     try { // Show side nav options according to authority
-      this.setTypeBooleans(localStorage.getItem('authority').toString());
+      const user = localStorage.getItem('user');
+      const title = JSON.parse(user).Title;
+      this.setTypeBooleans(title);
     } catch (error) {
       this.setTypeBooleans('');
     }
 
     try {
       // tslint:disable-next-line: radix
-      this.userID = parseInt(localStorage.getItem('userID'));
+      const user = localStorage.getItem('user');
+      this.userID = JSON.parse(user).ID;
     } catch (error) {
       this.userID = null;
     }
@@ -116,17 +120,25 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   setTypeBooleans(type: string): void {
     switch (type) {
-      case '0': // admin
+      case 'Site_Administrator': // admin
         this.manager = false;
         this.admin = true;
+        this.customer = false;
         break;
-      case '1': // Manager
+      case 'Opera_Management': // Manager
         this.manager = true;
         this.admin = false;
+        this.customer = false;
+        break;
+      case 'Opera_Management': // Customer
+        this.manager = true;
+        this.admin = false;
+        this.customer = true;
         break;
       default: // All False
         this.manager = false;
         this.admin = false;
+        this.customer = false;
         break;
     }
   }

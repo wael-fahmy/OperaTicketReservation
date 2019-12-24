@@ -3,8 +3,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ErrorComponent } from '../../error/error.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { NgForm } from '@angular/forms';
-import { ServerResponse } from '../auth-data.model';
 import { Subscription } from 'rxjs';
+import { SignInResponse } from '../auth-data.model';
 
 @Component({
   selector: 'app-signin',
@@ -57,35 +57,8 @@ export class SigninComponent implements OnInit, OnDestroy {
         });
 
       this.signinSubscription = this.authService.getSigninUpdated()
-        .subscribe((signinResponse: ServerResponse) => {
+        .subscribe((signinResponse: SignInResponse) => {
           console.log(signinResponse);
-          if (signinResponse.responseHexCode !== '00') {
-            if (this.dialog.openDialogs.length === 0) {
-              this.dialogRef =
-                this.dialog.open(ErrorComponent, { data: { message: signinResponse.responseMsg }, panelClass: 'my-dialog' });
-            }
-            switch (signinResponse.responseHexCode) {
-              case '02': // Incorrect Password
-                form.controls.password.setErrors({ incorrect: true });
-                break;
-              case 'FF': // Not found
-                form.controls.email.setErrors({ incorrect: true });
-                break;
-              case 'FB': // Password length is less than 8
-                form.controls.password.setErrors({ incorrect: true });
-                break;
-              case 'FA': // Email wrong format
-                form.controls.password.setErrors({ incorrect: true });
-                break;
-              default:
-                break;
-            }
-            try { this.signinSubscription.unsubscribe(); } catch (error) { }
-            try { this.serverErrorSubscription.unsubscribe(); } catch (error) { }
-            try { this.errorCodeSubscription.unsubscribe(); } catch (error) { }
-            return;
-          } else {
-          }
         }, (error: { json: () => void; }) => {
           console.clear();
           console.log(error);

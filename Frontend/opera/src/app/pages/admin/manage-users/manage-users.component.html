@@ -1,1 +1,128 @@
-<p>manage-users works!</p>
+<div class="container top-margin">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div class="page-header" *ngIf="!isLoading">
+    <h5> Manage Users </h5>
+    <div class="page-header-flex-div"></div>
+    <button mat-stroked-button color="primary" [routerLink]="['/']"> Back </button>
+  </div>
+
+  <div *ngIf="!thereAreUsers && !isLoading && !serverError" class="error-or-none-found">
+    <span> Users Found </span>
+  </div>
+
+  <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="ngOnInit()" class="button-top-down-margin"> Retry </button> <br>
+      If the error persists, please call technical support with error code ({{errorCode}})
+    </span>
+  </mat-card>
+
+  <div [hidden]="isLoading || !thereAreUsers || serverError">
+    <div>
+      <mat-form-field class="form-width">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+
+    <div class="table-overflow mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> User ID </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.ID || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="UserName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Username </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.UserName || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="First_Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> First Name </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.First_Name || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Last_Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Last Name </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Last_Name || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Birth_Date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Birth Date </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Birth_Date || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Gender </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Gender || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="City">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> City </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.City || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="User_Address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Address </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.User_Address || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Email </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Email || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Title </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Title || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <span> Actions </span>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-raised-button color="primary" *ngIf="!row.Verified" (click)="verifyUser(row.ID)"> Verify </button> <br *ngIf="!row.Verified">
+
+            <button mat-raised-button color="accent" [matMenuTriggerFor]="menu">Update</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngIf="row.Title != 'Site_Administrator'" (click)="updateUser(row.ID, 1)">Site Administrator</button>
+              <button mat-menu-item *ngIf="row.Title != 'Opera_Management'" (click)="updateUser(row.ID, 2)">Opera Management</button>
+              <button mat-menu-item *ngIf="row.Title != 'Customer'" (click)="updateUser(row.ID, 3)">Customer</button>
+            </mat-menu>
+
+            <button mat-raised-button color="warn" (click)="removeUser(row.ID)"> Remove </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" class="data">
+        </tr>
+      </table>
+    </div>
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

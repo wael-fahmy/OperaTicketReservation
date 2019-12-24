@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ErrorComponent } from 'src/app/error/error.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar, MAT_DATE_LOCALE, MatDialogRef } from '@angular/material';
-import { ServerResponse } from '../auth-data.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -114,7 +113,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       });
 
     this.signupSubscription = this.authService.getSignupUpdated()
-      .subscribe((serverResponse: ServerResponse) => {
+      .subscribe((serverResponse: any) => {
         if (serverResponse.responseHexCode !== '00') {
           if (this.dialog.openDialogs.length === 0) {
             this.dialogRef =
