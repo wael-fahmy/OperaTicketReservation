@@ -39,6 +39,7 @@ Select *
 From Event  
 where Event_Date =  Date1;
 end;  
+DELIMITER $$
 
 CREATE PROCEDURE UpdateEvent(
 IN eventId1 int,
@@ -50,10 +51,10 @@ IN  Hall_Number1 INT
 )
 begin
 Update Events 
-Set Event_Name =Event_Name1
- Event_Description= Event_Description1
-Event_Poster =Event_Poster1 
-Event_DateTime =Event_DateTime1
+Set Event_Name =Event_Name1,
+ Event_Description = Event_Description1,
+Event_Poster =Event_Poster1 ,
+Event_DateTime =Event_DateTime1,
 Hall_Number =Hall_Number1
 where Id =  eventId1;
 end;  

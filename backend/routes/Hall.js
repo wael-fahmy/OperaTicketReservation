@@ -1,16 +1,22 @@
-// creeate Hall 
-const express = require('express');
-const router = express.Router();
-const app = require("../app")
-const db = require("../db")
-// creat event 
+var bodyParser = require("body-parser");
+var mysql = require("mysql");
 
+
+function HALLS_ROUTER(router, connection) {
+    var self = this;
+    self.handleRoutes(router, connection);
+}
+
+HALLS_ROUTER.prototype.handleRoutes = function(router, connection) {
+    //router.use(bodyParser.urlencoded({ extended: false }));
+    router.use(bodyParser.json());
+    
 router.post('/Create', async (req, res) => {
     Number_Cols =req.body.Number_Cols
     Number_Rows =req.body.Number_Rows 
   
     let sql = "CAll CreateHAll(" + Number_Cols + "," + Number_Rows +")"
-    db.query(sql,(err, rows )=>
+    connection.query(sql,(err, rows )=>
   {
     res.send("added Successfully")
     console.log (rows)
@@ -22,7 +28,7 @@ router.post('/Create', async (req, res) => {
 
 router.get('/get/Available', async (req, res) => {
     let sql = "CAll GetAllAvailableHall()"
-    db.query(sql,(err, rows )=>
+    connection.query(sql,(err, rows )=>
   {
     res.send(rows)
   })
@@ -35,7 +41,7 @@ router.get('/get/Id', async (req, res) => {
     
     ID=req.query.ID
     let sql = "CAll GetHallById("+ ID +")"
-    db.query(sql,(err, rows )=>
+    connection.query(sql,(err, rows )=>
   {
     res.send(rows)
   })
@@ -49,12 +55,14 @@ router.get('/get/Id', async (req, res) => {
     
     ID=req.query.ID
     let sql = "CAll GetHallById("+ ID +")"
-    db.query(sql,(err, rows )=>
+    connection.query(sql,(err, rows )=>
   {
     res.send(rows)
   })
 })
 
+};  
 
+// ------------------------------------------------------------------------------------- //
 
-module.exports = router;
+module.exports = HALLS_ROUTER;
