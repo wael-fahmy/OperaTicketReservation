@@ -36,11 +36,12 @@ CREATE TABLE IF NOT EXISTS Events
     Event_Name VARCHAR(100) NOT NULL,
     Event_Description text,
     Event_Poster VARCHAR(255) DEFAULT 'None', 
-    Event_DateTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Event_Date DATE,
+    Event_Time TIME ,
     Hall_Number INT,
    -- Event_Status VARCHAR(25) DEFAULT 'ACTIVE',
-
     FOREIGN KEY(Hall_Number) REFERENCES Halls(Hall_Number)
+    ON DELETE SET NULL 
 );
 
 
@@ -51,9 +52,11 @@ CREATE TABLE IF NOT EXISTS Reservations
     UserID int, 
     Seat_Row int,
     Seat_Col int,
+    Paid BOOLEAN,
 
-    FOREIGN KEY(Event_ID) REFERENCES Events(ID),
-
+    FOREIGN KEY(Event_ID) REFERENCES Events(ID)
+    ON DELETE CASCADE,
     FOREIGN KEY(UserID) REFERENCES Users(ID)
+    ON DELETE CASCADE
 
 );
