@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageEventsComponent } from './manage-events.component';
+import { CancelReservationComponent } from './cancel-reservation.component';
 
-describe('ManageEventsComponent', () => {
-  let component: ManageEventsComponent;
-  let fixture: ComponentFixture<ManageEventsComponent>;
+describe('CancelReservationComponent', () => {
+  let component: CancelReservationComponent;
+  let fixture: ComponentFixture<CancelReservationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageEventsComponent ]
+      declarations: [ CancelReservationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageEventsComponent);
+    fixture = TestBed.createComponent(CancelReservationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

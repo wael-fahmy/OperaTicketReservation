@@ -8,7 +8,7 @@
   </div>
 
   <div *ngIf="!thereAreUsers && !isLoading && !serverError" class="error-or-none-found">
-    <span> Users Found </span>
+    <span> No Users Found </span>
   </div>
 
   <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">

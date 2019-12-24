@@ -1,0 +1,18 @@
+<div class="container" style="margin-top: 10px; align-items: center;">
+  <h4>All Events</h4>
+  <mat-card class="card-border" *ngFor="let event of eventsList" style="margin-bottom: 10px;">
+    <mat-card-header>
+      <mat-card-title>{{event.Event_Name}}</mat-card-title>
+      <mat-card-subtitle>{{event.Event_DateTime  | date:'medium'}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src={{event.Event_Poster}} alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p>{{event.Event_Description  }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <!-- <button mat-raised-button color="accent" (click)="reserve(event.ID)">Reserve Seat</button> -->
+      <a *ngIf="isCustomer" [routerLink]="['reservation', event.ID]">Reserve Seat</a>
+      <a *ngIf="isManager" [routerLink]="['reservation', event.ID]">View Seats</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

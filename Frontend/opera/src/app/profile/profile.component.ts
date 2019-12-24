@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ProfileService } from './profile.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+const BACKEND_URL = environment.apiUrl;
 
-export interface UserModel {
-  userID: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  gender: string;
-  city: string;
-  address: string;
-  email: string;
-  authority: number;
+export interface User {
+  ID: number;
+  UserName: string;
+  User_Password: string;
+  First_Name: string;
+  Last_Name: string;
+  Birth_Date: string;
+  Gender: string;
+  City: string;
+  User_Address: string;
+  Email: string;
+  Title: string;
+  Verified: boolean;
 }
 
 @Component({
@@ -23,24 +27,16 @@ export interface UserModel {
 export class ProfileComponent implements OnInit {
   serverError: boolean;
   errorCode: string;
-  // Is the page loading?
   isLoading = true;
-  // Was there an user with this ID
   isThereUser: boolean;
-  // The User ID in the URL
   snapshotParam: number;
-  // The User ID in the localStorage
   currentUserID: number;
-  // Can I go back?
   enableBack: boolean;
-  // Enable edit if this profile is mine
   enableEdit: boolean;
-  // View Mode (view only without editing)
   viewMode = true;
-  // Model to carry data
-  userData: UserModel;
+  userData: User;
 
-  constructor(private router: Router, private route: ActivatedRoute, private profileService: ProfileService) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -89,15 +85,16 @@ export class ProfileComponent implements OnInit {
     // tslint:disable-next-line: radix
     try {
       // tslint:disable-next-line: radix
-      this.currentUserID = parseInt(localStorage.getItem('userID'));
+      const user = localStorage.getItem('user');
+      this.currentUserID = JSON.parse(user).ID;
       this.enableEdit = (this.snapshotParam === this.currentUserID) ? true : false;
     } catch (error) {
       this.enableEdit = false;
     }
     // tslint:disable-next-line: radix
-    this.profileService.getUserDetails(this.snapshotParam)
-      .subscribe((userDataReceived: UserModel) => {
-        this.isThereUser = (!userDataReceived.email) ? false : true;
+    this.http.post<any>(BACKEND_URL + '/user/getUserByID', this.snapshotParam)
+      .subscribe((userDataReceived: User) => {
+        this.isThereUser = (!userDataReceived.Email) ? false : true;
 
         this.userData = userDataReceived;
 

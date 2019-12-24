@@ -90,8 +90,8 @@ export class CreateHallsComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      rows: new FormControl(null, { validators: [Validators.required] }),
-      columns: new FormControl(null, { validators: [Validators.required] }),
+      Number_Rows: new FormControl(null, { validators: [Validators.required] }),
+      Number_Cols: new FormControl(null, { validators: [Validators.required] }),
     });
   }
 }

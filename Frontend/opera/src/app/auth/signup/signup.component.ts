@@ -225,6 +225,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       city: new FormControl(null, { validators: [Validators.required] }),
       address: new FormControl(null),
       email: new FormControl(null, { validators: [Validators.required, Validators.email] }),
+      role: new FormControl(null, { validators: [Validators.required] }),
     });
 
     // this.getCountries();

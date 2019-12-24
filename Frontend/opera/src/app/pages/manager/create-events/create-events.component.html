@@ -28,9 +28,9 @@
       <mat-icon matSuffix>tablet_mac</mat-icon>
     </mat-form-field>
 
-    <!-- Description -->
+    <!-- Event_Description   -->
     <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
+      <mat-label>Event_Description  </mat-label>
       <input matInput type="text" formControlName="description">
       <mat-error *ngIf="form.get('description').invalid">Please enter the event description</mat-error>
       <mat-icon matSuffix>tablet_mac</mat-icon>
@@ -54,8 +54,7 @@
     <!-- Hall Number -->
     <mat-form-field appearance="outline">
       <mat-label>Hall Number</mat-label>
-      <mat-select matInput formControlName="hallNumber" [(value)]="selectedHallNumber" disableOptionCentering
-        panelClass="select-margin">
+      <mat-select matInput formControlName="hallNumber" disableOptionCentering panelClass="select-margin">
         <mat-option *ngFor="let hallNumber of hallNumbersArray" value="{{hallNumber}}"> {{hallNumber}}
         </mat-option>
       </mat-select>

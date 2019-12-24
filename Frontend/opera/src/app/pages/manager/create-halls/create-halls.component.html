@@ -23,16 +23,16 @@
     <!-- Rows -->
     <mat-form-field appearance="outline">
       <mat-label>Hall Rows</mat-label>
-      <input matInput type="number" min="1" (keydown)="onKeydown($event)" formControlName="rows">
-      <mat-error *ngIf="form.get('rows').invalid">Please enter the hall rows number</mat-error>
+      <input matInput type="number" min="1" (keydown)="onKeydown($event)" formControlName="Number_Rows">
+      <mat-error *ngIf="form.get('Number_Rows').invalid">Please enter the hall rows number</mat-error>
       <mat-icon matSuffix>tablet_mac</mat-icon>
     </mat-form-field>
 
     <!-- Columns -->
     <mat-form-field appearance="outline">
       <mat-label>Columns</mat-label>
-      <input matInput type="number" min="1" (keydown)="onKeydown($event)" formControlName="columns">
-      <mat-error *ngIf="form.get('columns').invalid">Please enter the hall columns number</mat-error>
+      <input matInput type="number" min="1" (keydown)="onKeydown($event)" formControlName="Number_Cols">
+      <mat-error *ngIf="form.get('Number_Cols').invalid">Please enter the hall columns number</mat-error>
       <mat-icon matSuffix>tablet_mac</mat-icon>
     </mat-form-field>
 

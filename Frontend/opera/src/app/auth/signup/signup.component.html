@@ -103,6 +103,18 @@
       <mat-icon matSuffix>email</mat-icon>
     </mat-form-field>
 
+    <!-- Role -->
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select matInput formControlName="role" disableOptionCentering panelClass="select-margin">
+        <mat-option>None</mat-option>
+        <mat-option value="1">Site Administrator</mat-option>
+        <mat-option value="2">Opera Management</mat-option>
+        <mat-option value="3">Customer</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('role').invalid">You must choose a role</mat-error>
+    </mat-form-field>
+
     <div class="form-controls row">
       <div class="col">
         <a [routerLink]="['/']"> Already a member? </a>

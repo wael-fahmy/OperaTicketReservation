@@ -1,18 +1,20 @@
-import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
 import { NotSignedInGuard } from './guards/not-signedin-guard.service';
 import { RoleGuard } from './guards/role-guard.service';
-import { Routes, RouterModule } from '@angular/router';
 import { SignedInGuard } from './guards/signedin-guard.service';
-import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
-import { SigninComponent } from './auth/signin/signin.component';
-import { SignupComponent } from './auth/signup/signup.component';
+
+import { CancelEventComponent } from './pages/manager/cancel-event/cancel-event.component';
 import { CreateEventsComponent } from './pages/manager/create-events/create-events.component';
 import { CreateHallsComponent } from './pages/manager/create-halls/create-halls.component';
-import { EditEventComponent } from './pages/manager/edit-event/edit-event.component';
-import { EditHallComponent } from './pages/manager/edit-hall/edit-hall.component';
-import { ManageEventsComponent } from './pages/manager/manage-events/manage-events.component';
+import { HomeComponent } from './home/home.component';
+import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { CancelReservationComponent } from './pages/customer/cancel-reservation/cancel-reservation.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 const routes: Routes = [
   {
@@ -51,20 +53,8 @@ const routes: Routes = [
     data: { authority: 'Opera_Management' }
   },
   {
-    path: 'edit-event',
-    component: EditEventComponent,
-    canActivate: [RoleGuard],
-    data: { authority: 'Opera_Management' }
-  },
-  {
-    path: 'edit-hall',
-    component: EditHallComponent,
-    canActivate: [RoleGuard],
-    data: { authority: 'Opera_Management' }
-  },
-  {
-    path: 'manage-events',
-    component: ManageEventsComponent,
+    path: 'cancel-event',
+    component: CancelEventComponent,
     canActivate: [RoleGuard],
     data: { authority: 'Opera_Management' }
   },
@@ -73,6 +63,18 @@ const routes: Routes = [
     path: 'profile/:uid',
     component: ProfileComponent,
     canActivate: [SignedInGuard]
+  },
+  {
+    path: 'cancel-reservation',
+    component: CancelReservationComponent,
+    canActivate: [RoleGuard],
+    data: { authority: 'Customer' }
+  },
+  {
+    path: 'reservation:eventID',
+    component: ReservationComponent,
+    canActivate: [RoleGuard],
+    data: { authority: 'Customer' }
   },
   {
     path: '**',

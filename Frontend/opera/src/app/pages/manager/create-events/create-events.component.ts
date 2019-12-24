@@ -20,7 +20,7 @@ export class CreateEventsComponent implements OnInit {
   serverError: boolean;
   errorCode: string;
   isLoading = false;
-  hallNumbersArray = [0, 1, 2, 3];
+  hallNumbersArray = [];
   selectedHallNumber;
   posterPreview;
   minDate = new Date();
