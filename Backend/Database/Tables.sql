@@ -36,8 +36,7 @@ CREATE TABLE IF NOT EXISTS Events
     Event_Name VARCHAR(100) NOT NULL,
     Event_Description text,
     Event_Poster VARCHAR(255) DEFAULT 'None', 
-    Event_Date DATE,
-    Event_Time TIME ,
+    Event_DateTime DATETime,
     Hall_Number INT,
    -- Event_Status VARCHAR(25) DEFAULT 'ACTIVE',
     FOREIGN KEY(Hall_Number) REFERENCES Halls(Hall_Number)

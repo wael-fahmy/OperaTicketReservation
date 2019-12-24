@@ -12,8 +12,7 @@ Update Halls
 Set IsAvailable = FALSE
 Where Hall_Number= Id;
 End;
-DELIMITER $$
- 
+
 CREATE PROCEDURE GetAllAvailableHall()
 Begin
 Select *
