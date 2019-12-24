@@ -1,28 +1,28 @@
 DELIMITER $$
 CREATE PROCEDURE ChangeUserTitle(
-    IN id INT,
-    IN title INT
+    IN id1 INT,
+    IN title1 INT
 )
 BEGIN
 
 UPDATE users
-SET Title = title --1 for admin 2 for opera manger 3 for customer
-WHERE ID = id;
+SET Title = title1 
+WHERE ID = id1;
 
 END;
 
--- GET ALL USERS
+
 CREATE PROCEDURE GetAllUser()
 begin 
 	select * from  Users; 
 end ;
 
 -- DELETE SPECIFIC USER
-CREATE PROCEDURE DeleteUser(IN Id int  )
+CREATE PROCEDURE DeleteUser(IN Id1 int  )
 begin 
 	Delete 
     from users 
-    Where ID  = Id;
+    Where ID  = Id1;
 end ;
 
 -- GET USER TO BE APPROVED 
@@ -50,7 +50,7 @@ begin
 end;
  
 -- Get User By ID 
-CREATE PROCEDURE GetUserById(IN ID1 VARCHAR(50) )
+CREATE PROCEDURE GetUserById(IN ID1 int )
 begin 
 	select *
     from users 
@@ -62,7 +62,7 @@ CREATE PROCEDURE VerifyUser(IN userId1 int )
 		BEGIN
 			UPDATE users
 			SET Verified = True 
-            where Id =userId1;
+            where ID =userId1;
 		End	;	 
 -- Create NEw User SignUp
 
@@ -84,7 +84,7 @@ IN    Title1 int)
 begin 
 INSERT INTO users(UserName,User_Password,First_Name,Last_Name,Birth_Date,Gender,City ,User_Address,Email ,Title ,Verified) 
 values (UserName1,User_Password1,First_Name1,Last_Name1,Birth_Date1,Gender1,City1,User_Address1,Email1 ,Title1 ,FALSE) ;
-end 
+end ;
 
 CREATE PROCEDURE SignIn(
 IN userName1 VARCHAR(50),
@@ -106,7 +106,7 @@ BEGIN
 END;
 END if;
 
-SELECT 0 as response; #Login Success
+SELECT 0 as response;
 SELECT * FROM users where users.UserName = userName1 AND users.User_Password = userPassword1;
 END;
 
@@ -129,8 +129,20 @@ IN    User_Address1 VARCHAR(100)
 		 Gender = Gender1,
 		 City = City1,
 		 User_Address = User_Address1
-		WHERE ID=userId1
-	End	;	
+		WHERE ID=userId1;
+	End	
+
+-- Update User NOT DONE YET
+CREATE PROCEDURE UpdateUserPassword(
+IN   userId1 int,
+IN    User_Password1 VARCHAR(50) 
+)
+	BEGIN
+		UPDATE users    
+		SET User_Password = User_Password1
+		WHERE ID=userId1;
+	End	
+
     
 
  
