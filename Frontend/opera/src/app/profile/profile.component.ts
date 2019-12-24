@@ -103,8 +103,8 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
       }, error => {
         console.log(error);
-        if (error.error.responseHexCode) {
-          this.errorCode = error.error.responseHexCode + ' - ' + error.error.responseMsg;
+        if (error.error.message) {
+          this.errorCode = error.error.message;
         } else {
           // Can't Reach Server
           this.errorCode = 'A01001041000';

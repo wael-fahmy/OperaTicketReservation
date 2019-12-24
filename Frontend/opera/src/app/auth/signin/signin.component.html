@@ -25,11 +25,8 @@
     </div>
 
     <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input matInput name="email" ngModel #emailInput="ngModel" required>
-      <mat-hint align="end">{{emailInput.value?.length || 0}}/20</mat-hint>
-      <mat-error *ngIf="emailInput.invalid"> Wrong Email or Not a valid Format
-      </mat-error>
+      <mat-label>Username</mat-label>
+      <input matInput name="text" ngModel #emailInput="ngModel" required>
       <mat-icon matSuffix>email</mat-icon>
     </mat-form-field>
 

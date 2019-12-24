@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 export interface Event {
   ID: number;
   Event_Name: string;
-  Event_Description  : string;
+  Event_Description: string;
   Event_Poster: string;
-  Event_DateTime : string;
+  Event_DateTime: string;
   Hall_Number: number;
 }
 

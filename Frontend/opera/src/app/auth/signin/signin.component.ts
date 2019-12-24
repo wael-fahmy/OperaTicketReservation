@@ -40,40 +40,31 @@ export class SigninComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.validate(form.value.email)) {
-      this.isLoading = true;
+    this.isLoading = true;
 
-      this.authService.signin(form.value.email, form.value.password);
+    this.authService.signin(form.value.email, form.value.password);
 
-      this.serverErrorSubscription = this.authService.getServerErrorLoginListener()
-        .subscribe((serverErrorLoginResponse: boolean) => {
-          this.serverError = serverErrorLoginResponse;
-        });
+    this.serverErrorSubscription = this.authService.getServerErrorLoginListener()
+      .subscribe((serverErrorLoginResponse: boolean) => {
+        this.serverError = serverErrorLoginResponse;
+      });
 
-      this.errorCodeSubscription = this.authService.getErrorCodeLoginListener()
-        .subscribe((serverErrorLoginResponse: string) => {
-          this.errorCode = serverErrorLoginResponse;
-          this.isLoading = false;
-        });
+    this.errorCodeSubscription = this.authService.getErrorCodeLoginListener()
+      .subscribe((serverErrorLoginResponse: string) => {
+        this.errorCode = serverErrorLoginResponse;
+        this.isLoading = false;
+      });
 
-      this.signinSubscription = this.authService.getSigninUpdated()
-        .subscribe((signinResponse: SignInResponse) => {
-          console.log(signinResponse);
-        }, (error: { json: () => void; }) => {
-          console.clear();
-          console.log(error);
-          try { this.signinSubscription.unsubscribe(); } catch (error) { }
-          try { this.serverErrorSubscription.unsubscribe(); } catch (error) { }
-          try { this.errorCodeSubscription.unsubscribe(); } catch (error) { }
-        });
-    } else {
-      // Validation Error
-      form.controls.email.setErrors({ incorrect: true });
-      if (this.dialog.openDialogs.length === 0) {
-        this.dialogRef =
-          this.dialog.open(ErrorComponent, { data: { message: 'Resolve invalid inputs before submiting' }, panelClass: 'my-dialog' });
-      }
-    }
+    this.signinSubscription = this.authService.getSigninUpdated()
+      .subscribe((signinResponse: SignInResponse) => {
+        console.log(signinResponse);
+      }, (error: { json: () => void; }) => {
+        console.clear();
+        console.log(error);
+        try { this.signinSubscription.unsubscribe(); } catch (error) { }
+        try { this.serverErrorSubscription.unsubscribe(); } catch (error) { }
+        try { this.errorCodeSubscription.unsubscribe(); } catch (error) { }
+      });
   }
 
   findInvalidControls(form: NgForm) {
@@ -81,17 +72,6 @@ export class SigninComponent implements OnInit, OnDestroy {
       if (form.controls[name].invalid) {
         return true;
       }
-    }
-    return false;
-  }
-
-  validate(email: string): boolean {
-    if (/^.+[@].+[.].+$/.test(email)) {
-      return true;
-    } else if (email.length === 14 && /^\d+$/.test(email)) {
-      return true;
-    } else if (email.length >= 16 && email.length <= 20 && /^\d+$/.test(email)) {
-      return true;
     }
     return false;
   }

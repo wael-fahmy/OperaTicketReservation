@@ -95,7 +95,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    const datePicked = this.form.get('birthDate');
+    const datePicked = this.form.get('Birth_Date');
     const tzoffset = (datePicked.value).getTimezoneOffset() * 60000; // offset in milliseconds
     const localISOTime = (new Date(datePicked.value - tzoffset));
     datePicked.setValue(localISOTime);
@@ -114,29 +114,11 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     this.signupSubscription = this.authService.getSignupUpdated()
       .subscribe((serverResponse: any) => {
-        if (serverResponse.responseHexCode !== '00') {
+        if (serverResponse.message !== '00') {
           if (this.dialog.openDialogs.length === 0) {
             this.dialogRef =
-              this.dialog.open(ErrorComponent, { data: { message: serverResponse.responseMsg }, panelClass: 'my-dialog' });
+              this.dialog.open(ErrorComponent, { data: { message: serverResponse.message }, panelClass: 'my-dialog' });
           }
-
-          switch (serverResponse.responseHexCode) {
-            case '02': // Incorrect Password
-              this.form.get('password').setErrors({ incorrect: true });
-              break;
-            case 'FF': // Not found
-              this.form.get('email').setErrors({ incorrect: true });
-              break;
-            case 'FB': // Password length is less than 8
-              this.form.get('password').setErrors({ incorrect: true });
-              break;
-            case 'FA': // Email wrong format
-              this.form.get('password').setErrors({ incorrect: true });
-              break;
-            default:
-              break;
-          }
-
           this.serverErrorSubscription = this.authService.getServerErrorSignUpListener()
             .subscribe((serverErrorSignUpResponse: boolean) => {
               this.isLoading = false;
@@ -154,7 +136,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           try { this.errorCodeSubscription.unsubscribe(); } catch (error) { }
           return;
         } else {
-          this.snackBar.open(serverResponse.responseMsg, null, {
+          this.snackBar.open(serverResponse.message, null, {
             duration: 2500,
           });
         }
@@ -215,17 +197,18 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(authStatus => { this.isLoading = false; });
 
     this.form = new FormGroup({
-      username: new FormControl(null, { validators: [Validators.required] }),
-      password: new FormControl(null, { validators: [Validators.required, Validators.minLength(8)] }),
+      UserName: new FormControl(null, { validators: [Validators.required] }),
+      User_Password: new FormControl(null, { validators: [Validators.required, Validators.minLength(8)] }),
       // tslint:disable-next-line: max-line-length
-      firstName: new FormControl(null, { validators: [Validators.required, Validators.pattern('[^0-9\.\?\!\@\#\$\%\^\&\*\(\)\<\>\{\}]+')] }),
-      lastName: new FormControl(null, { validators: [Validators.required, Validators.pattern('[^0-9\.\?\!\@\#\$\%\^\&\*\(\)\<\>\{\}]+')] }),
-      birthDate: new FormControl(null, { validators: [Validators.required] }),
-      gender: new FormControl(null, { validators: [Validators.required] }),
-      city: new FormControl(null, { validators: [Validators.required] }),
-      address: new FormControl(null),
-      email: new FormControl(null, { validators: [Validators.required, Validators.email] }),
-      role: new FormControl(null, { validators: [Validators.required] }),
+      First_Name: new FormControl(null, { validators: [Validators.required, Validators.pattern('[^0-9\.\?\!\@\#\$\%\^\&\*\(\)\<\>\{\}]+')] }),
+      // tslint:disable-next-line: max-line-length
+      Last_Name: new FormControl(null, { validators: [Validators.required, Validators.pattern('[^0-9\.\?\!\@\#\$\%\^\&\*\(\)\<\>\{\}]+')] }),
+      Birth_Date: new FormControl(null, { validators: [Validators.required] }),
+      Gender: new FormControl(null, { validators: [Validators.required] }),
+      City: new FormControl(null, { validators: [Validators.required] }),
+      User_Address: new FormControl(null),
+      Email: new FormControl(null, { validators: [Validators.required, Validators.email] }),
+      Title: new FormControl(null, { validators: [Validators.required] }),
     });
 
     // this.getCountries();

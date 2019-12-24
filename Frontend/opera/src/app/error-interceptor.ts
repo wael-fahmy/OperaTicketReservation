@@ -15,8 +15,8 @@ export class ErrorInterceptor implements HttpInterceptor, ErrorHandler {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'A Server Related Error Occurred!';
-        if (error.error.responseHexCode) {
-          errorMessage = error.error.responseHexCode;
+        if (error.error.message) {
+          errorMessage = error.error.message;
         }
         // let dialogRef: MatDialogRef<ErrorComponent>;
         // if (this.dialog.openDialogs.length === 0) {

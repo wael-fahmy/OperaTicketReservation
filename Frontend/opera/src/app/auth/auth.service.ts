@@ -106,8 +106,7 @@ export class AuthService {
   }
 
   signup(user: SignUpData) {
-    const authData: SignUpData = user;
-    return this.http.post<any>(BACKEND_URL + '/signup', authData)
+    return this.http.post<any>(BACKEND_URL + '/Users/SignUp', user)
       .subscribe(response => {
         this.authStatusListener.next(false);
         this.authAuthorityListener.next('');
@@ -133,9 +132,9 @@ export class AuthService {
       );
   }
 
-  signin(email: string, password: string) {
-    const authData: LoginData = { email, password };
-    return this.http.post<SignInResponse>(BACKEND_URL + '/login', authData)
+  signin(UserName: string, User_Password: string) {
+    const authData: LoginData = { UserName, User_Password };
+    return this.http.post<SignInResponse>(BACKEND_URL + '/Users/SignIn', authData)
       .subscribe(response => {
         if (response.user.ID) {
           // const expiresInDuration = response.expiresIn;
@@ -156,10 +155,10 @@ export class AuthService {
         }
       }, error => {
         console.log(error);
-        if (error.error.responseHexCode) {
+        if (error.error.message) {
           this.serverErrorLogin = true;
           this.serverErrorLoginListener.next(true);
-          this.errorCodeLogin = error.error.responseHexCode + ' - ' + error.error.responseMsg;
+          this.errorCodeLogin = error.error.message;
           this.errorCodeLoginListener.next(this.errorCodeLogin);
         } else {
           // Can't Reach Server
@@ -194,7 +193,7 @@ export class AuthService {
     // TODO:
     this.http.post<any>(BACKEND_URL + '/logout', { ID })
       .subscribe(response => {
-        if (response.responseHexCode === '00') {
+        if (response.message === '00') {
           this.isAuthenticated = false;
           this.authority = '';
           this.userID = '';
@@ -212,8 +211,8 @@ export class AuthService {
         }
       }, error => {
         console.log(error);
-        if (error.error.responseHexCode) {
-          this.errorCodeLogout = error.error.responseHexCode + ' - ' + error.error.responseMsg;
+        if (error.error.message) {
+          this.errorCodeLogout = error.error.message;
           this.errorCodeLogoutListener.next(this.errorCodeLogout);
           this.serverErrorLogout = true;
           this.serverErrorLogoutListener.next(true);
@@ -225,7 +224,7 @@ export class AuthService {
           this.serverErrorLogoutListener.next(true);
         }
 
-        switch (error.error.responseHexCode) {
+        switch (error.error.message) {
           case '01':  // User already logged out
           case '02':  //
           case 'FC':  // Catch Block

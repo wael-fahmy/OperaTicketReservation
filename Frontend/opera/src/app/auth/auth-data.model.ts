@@ -1,6 +1,6 @@
 export interface LoginData {
-  email: string;
-  password: string;
+  UserName: string;
+  User_Password: string;
 }
 
 export interface User {
@@ -27,7 +27,6 @@ export class SignUpData {
   public constructor(init?: Partial<SignUpData>) {
     Object.assign(this, init);
   }
-  ID: number;
   UserName: string;
   // tslint:disable-next-line: variable-name
   User_Password: string;
@@ -43,5 +42,4 @@ export class SignUpData {
   User_Address: string;
   Email: string;
   Title: string;
-  Verified: boolean;
 }

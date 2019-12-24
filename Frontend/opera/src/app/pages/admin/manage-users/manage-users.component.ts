@@ -59,7 +59,7 @@ export class ManageUsersComponent implements OnInit {
   verifyUser(ID: number) {
     this.isLoading = true;
     // tslint:disable-next-line: radix
-    this.http.post(BACKEND_URL + 'user', ID)
+    this.http.post(BACKEND_URL + '/Users/VerifyUser', { ID })
       .subscribe((response: any) => {
         this.snackBar.open('Verified user with ID: ' + ID.toString(), null, {
           duration: 2000,
@@ -75,6 +75,7 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
+  // TODO:
   updateUser(ID: number, authority: number) {
     this.isLoading = true;
     this.http.post(BACKEND_URL + 'user', { ID, authority })
@@ -95,7 +96,7 @@ export class ManageUsersComponent implements OnInit {
 
   removeUser(ID: number) {
     this.isLoading = true;
-    this.http.post(BACKEND_URL + 'user', ID)
+    this.http.post(BACKEND_URL + '/Users/DeleteUser', { ID })
       .subscribe((response: any) => {
         this.snackBar.open('Removed user with ID: ' + ID.toString(), null, {
           duration: 2000,
@@ -115,9 +116,8 @@ export class ManageUsersComponent implements OnInit {
     this.isLoading = true;
     this.thereAreUsers = false;
 
-    this.http.post<any>(BACKEND_URL + '/users/getAllUsers', null)
+    this.http.post<any>(BACKEND_URL + '/Users/getAllUsers', null)
       .subscribe((usersDataReceived: User[]) => {
-        // TODO: Check Bellow Line
         this.userDetails = usersDataReceived;
 
         this.thereAreUsers = (this.userDetails.length === 0) ? false : true;

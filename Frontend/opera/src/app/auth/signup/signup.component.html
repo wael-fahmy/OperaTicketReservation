@@ -27,16 +27,16 @@
     <!-- Username -->
     <mat-form-field appearance="outline">
       <mat-label>Username</mat-label>
-      <input matInput type="text" formControlName="username">
-      <mat-error *ngIf="form.get('username').invalid">Please enter your username</mat-error>
+      <input matInput type="text" formControlName="UserName">
+      <mat-error *ngIf="form.get('UserName').invalid">Please enter your username</mat-error>
       <mat-icon matSuffix>fingerprint</mat-icon>
     </mat-form-field>
 
     <!-- Password -->
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" minlength="8">
-      <mat-error *ngIf="form.get('password').invalid">Minimum 8 characters</mat-error>
+      <input [type]="hide ? 'password' : 'text'" matInput formControlName="User_Password" minlength="8">
+      <mat-error *ngIf="form.get('User_Password').invalid">Minimum 8 characters</mat-error>
       <mat-icon mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="hide" class="cursor-pointer">{{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
     </mat-form-field>
@@ -44,23 +44,23 @@
     <!-- First Name -->
     <mat-form-field appearance="outline">
       <mat-label>First Name</mat-label>
-      <input matInput type="text" formControlName="firstName">
-      <mat-error *ngIf="form.get('firstName').invalid">Please enter your first name with only letters</mat-error>
+      <input matInput type="text" formControlName="First_Name">
+      <mat-error *ngIf="form.get('First_Name').invalid">Please enter your first name with only letters</mat-error>
       <mat-icon matSuffix>account_circle</mat-icon>
     </mat-form-field>
 
     <!-- Last Name -->
     <mat-form-field appearance="outline">
       <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName">
-      <mat-error *ngIf="form.get('lastName').invalid">Please enter your last name with only letters</mat-error>
+      <input matInput formControlName="Last_Name">
+      <mat-error *ngIf="form.get('Last_Name').invalid">Please enter your last name with only letters</mat-error>
       <mat-icon matSuffix>account_box</mat-icon>
     </mat-form-field>
 
     <!-- D. O. B. -->
     <mat-form-field appearance="outline" (click)="picker.open()" (focus)="picker.open()">
       <mat-label>Birth Date</mat-label>
-      <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="birthDate"
+      <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="Birth_Date"
         (focus)="picker.open()" (keydown)="onCalendarKeydown($event)">
       <mat-error *ngIf="!picker">You must choose a birth date</mat-error>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -70,49 +70,49 @@
     <!-- Gender -->
     <mat-form-field appearance="outline">
       <mat-label>Gender</mat-label>
-      <mat-select matInput formControlName="gender" disableOptionCentering panelClass="select-margin">
+      <mat-select matInput formControlName="Gender" disableOptionCentering panelClass="select-margin">
         <mat-option>None</mat-option>
         <mat-option value="Female">Female</mat-option>
         <mat-option value="Male">Male</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('gender').invalid">You must choose a gender</mat-error>
+      <mat-error *ngIf="form.get('Gender').invalid">You must choose a gender</mat-error>
     </mat-form-field>
 
     <!-- City -->
     <mat-form-field appearance="outline">
       <mat-label>City</mat-label>
-      <mat-select matInput formControlName="city" [(value)]="chosenCity" disableOptionCentering panelClass="select-margin">
+      <mat-select matInput formControlName="City" [(value)]="chosenCity" disableOptionCentering panelClass="select-margin">
         <mat-option *ngIf="!cityArray" value="-1">None</mat-option>
         <mat-option *ngFor="let city of cityArray, let k = index" value="{{city}}">{{city}}</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('city').invalid">You must choose a city</mat-error>
+      <mat-error *ngIf="form.get('City').invalid">You must choose a city</mat-error>
     </mat-form-field>
 
     <!-- Address -->
     <mat-form-field appearance="outline">
       <mat-label>Address</mat-label>
-      <input matInput type="text" formControlName="address">
+      <input matInput type="text" formControlName="User_Address">
       <mat-icon matSuffix>account_circle</mat-icon>
     </mat-form-field>
 
     <!-- Email -->
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email">
-      <mat-error *ngIf="form.get('email').invalid">Not a valid Email Format</mat-error>
+      <input matInput formControlName="Email">
+      <mat-error *ngIf="form.get('Email').invalid">Not a valid Email Format</mat-error>
       <mat-icon matSuffix>email</mat-icon>
     </mat-form-field>
 
-    <!-- Role -->
+    <!-- Title -->
     <mat-form-field appearance="outline">
-      <mat-label>Role</mat-label>
-      <mat-select matInput formControlName="role" disableOptionCentering panelClass="select-margin">
+      <mat-label>Title</mat-label>
+      <mat-select matInput formControlName="Title" disableOptionCentering panelClass="select-margin">
         <mat-option>None</mat-option>
         <mat-option value="1">Site Administrator</mat-option>
         <mat-option value="2">Opera Management</mat-option>
         <mat-option value="3">Customer</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('role').invalid">You must choose a role</mat-error>
+      <mat-error *ngIf="form.get('Title').invalid">You must choose a role</mat-error>
     </mat-form-field>
 
     <div class="form-controls row">

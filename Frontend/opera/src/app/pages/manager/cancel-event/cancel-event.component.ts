@@ -11,9 +11,9 @@ const BACKEND_URL = environment.apiUrl;
 export interface Event {
   ID: number;
   Event_Name: string;
-  Event_Description  : string;
+  Event_Description: string;
   Event_Poster: string;
-  Event_DateTime : string;
+  Event_DateTime: string;
   Hall_Number: number;
 }
 
@@ -51,11 +51,11 @@ export class CancelEventComponent implements OnInit {
     }
   }
 
-  cancelEvent(eventID: number) {
+  cancelEvent(Id: number) {
     this.isLoading = true;
-    this.http.post(BACKEND_URL + 'event', eventID)
+    this.http.post(BACKEND_URL + '/Events/delete', { Id })
       .subscribe((response: any) => {
-        this.snackBar.open('Canceled event with ID: ' + eventID.toString(), null, {
+        this.snackBar.open('Canceled event with ID: ' + Id.toString(), null, {
           duration: 2000,
         });
         this.serverError = false;
@@ -73,9 +73,8 @@ export class CancelEventComponent implements OnInit {
     this.isLoading = true;
     this.thereAreEvents = false;
 
-    this.http.post<any>(BACKEND_URL + '/events/getAllEvents', null)
+    this.http.post<any>(BACKEND_URL + '/Events/get', null)
       .subscribe((eventsDataReceived: Event[]) => {
-        // TODO: Check Bellow Line
         this.eventDetails = eventsDataReceived;
 
         this.thereAreEvents = (this.eventDetails.length === 0) ? false : true;

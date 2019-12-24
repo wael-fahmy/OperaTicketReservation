@@ -60,7 +60,7 @@ export class CreateEventsComponent implements OnInit {
     formJSON.eventDate.setHours(this.exportTime.hour);
     formJSON.eventDate.setMinutes(this.exportTime.minute);
     this.isLoading = true;
-    this.http.post<any>(BACKEND_URL + '/event/create', formJSON)
+    this.http.post<any>(BACKEND_URL + '/Events/Create', formJSON)
       .subscribe((serverResponse: any) => {
         this.snackBar.open('Successfully Created Event', null, {
           duration: 3000,
