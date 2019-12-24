@@ -11,7 +11,7 @@ app.use(express.json());
 
 // 
 app.use('/api/Users', Users);
-app.use('/api/Auth', Auth);
+//app.use('/api/Auth', Auth);
 app.use('/api/Halls', Halls);
 app.use('/api/Events', Events);
 app.use('/api/Reservations', Reservations);

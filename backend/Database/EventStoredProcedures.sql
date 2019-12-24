@@ -11,6 +11,7 @@ IN  Hall_Number1 INT )
 begin 
 INSERT INTO Events(Event_Name,Event_Description,Event_Poster, Event_Date,Event_Time ,Hall_Number)
 values (Event_Name1,Event_Description1,Event_Poster1, Event_Date1,Event_Time1,Hall_Number1);
+Call SetNotAvailable(Hall_Number1);
 end; 
 
 CREATE PROCEDURE DeleteEvent(IN Id1 int )
