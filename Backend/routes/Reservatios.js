@@ -46,7 +46,7 @@ router.post('/Create', async (req, res) => {
     
     
     router.get('/get/userId', async (req, res) => {
-        Id = req.body.userId;
+        Id = req.query.userId;
         
         let sql = "CAll  GetTicketByUserId(" +Id+")"
         connection.query(sql,(err, rows )=>
@@ -55,13 +55,12 @@ router.post('/Create', async (req, res) => {
         {
           res.status(400).send("something went wrong")      
         }
-        res.status(200).send("deleted Successfully")
-       // console.log (rows)
+        res.status(200).send(rows[0])
       })
     })
   
     router.get('/get/eventId', async (req, res) => {
-        Id = req.body.eventId;
+        Id = req.query.eventId;
         
         let sql = "CAll  GetTicketByEvent(" +Id+")"
         connection.query(sql,(err, rows )=>
@@ -70,13 +69,13 @@ router.post('/Create', async (req, res) => {
         {
           res.status(400).send("something went wrong")      
         }
-        res.status(200).send("deleted Successfully")
+        res.status(200).send(rows[0])
        // console.log (rows)
       })
     })
 
     
-    router.get('/pay', async (req, res) => {
+    router.post('/pay', async (req, res) => {
         Id = req.body.ticketId;
         
         let sql = "CAll payTicket(" +Id+")"
@@ -86,7 +85,7 @@ router.post('/Create', async (req, res) => {
         {
           res.status(400).send("something went wrong")      
         }
-        res.status(200).send("deleted Successfully")
+        res.status(200).send("paid Successfully")
        // console.log (rows)
       })
     })

@@ -11,7 +11,7 @@ values (Event_ID1,UserID1,Seat_Row1,Seat_Col1,FALSE);
 end; 
 
 
-CREATE PROCEDURE DeleteTicket( In Id1)
+CREATE PROCEDURE DeleteTicket( In Id1 int)
 begin 
      Delete 
      from Reservations
