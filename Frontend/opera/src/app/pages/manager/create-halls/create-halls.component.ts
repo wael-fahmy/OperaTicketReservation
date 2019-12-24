@@ -74,6 +74,20 @@ export class CreateHallsComponent implements OnInit {
     return false;
   }
 
+  onKeydown(event) {
+    if ((event.keyCode >= 8 && event.keyCode <= 46 && event.keyCode !== 32) || (event.keyCode >= 96 && event.keyCode <= 105)) {
+      return;
+    }
+
+    if (event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) {
+      this.snackBar.open('You can enter only numbers', null, {
+        duration: 2500,
+      });
+      return !event;
+    }
+    this.snackBar.dismiss();
+  }
+
   ngOnInit() {
     this.form = new FormGroup({
       rows: new FormControl(null, { validators: [Validators.required] }),
