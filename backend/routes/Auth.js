@@ -1,9 +1,7 @@
 
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const _ = require('lodash');
-const {User} = require('../models/User');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
@@ -51,7 +49,7 @@ router.post('/', async (req, res) => {
   let user = await User.findOne({ UserEmail: req.body.UserEmail.toLowerCase() });
   if (!user) return res.status(400).send({"ReturnMsg":"Invalid email or password."});
   if (!user.Confirmed) return res.status(401).send({ "ReturnMsg" :'Your account has not been verified.' });
-  const validPassword = await bcrypt.compare(req.body.UserPassword, user.UserPassword);
+ // const validPassword = await bcrypt.compare(req.body.UserPassword, user.UserPassword);
   if (!validPassword) return res.status(400).send({"ReturnMsg":"Invalid email or password."});
   const token = user.generateAuthToken();
     res.send({
