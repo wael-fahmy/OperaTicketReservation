@@ -66,7 +66,7 @@ REST.prototype.configureExpress = function(connection) {
 
     //Instantiate the Routes:
     new Users(UsersRouter, connection);
-    new Halls(HallsRouter,connection);
+    new Halls(EventsRouter,connection);
     new Events(EventsRouter,connection);
     new Reservations(ReservationsRouter,connection);
 
