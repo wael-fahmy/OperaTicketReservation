@@ -18,8 +18,14 @@ router.post('/Create', async (req, res) => {
     let sql = "CAll CreateHAll(" + Number_Cols + "," + Number_Rows +")"
     connection.query(sql,(err, rows )=>
   {
-    res.send("added Successfully")
-    console.log (rows)
+    if(err)
+
+    {  console.log(err)
+    
+      res.status(400).send("something went wrong")      
+    }
+    
+     res.status(200).send("added Successfully")
   })
 })
   
