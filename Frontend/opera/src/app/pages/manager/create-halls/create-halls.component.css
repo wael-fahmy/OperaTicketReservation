@@ -1,0 +1,52 @@
+input {
+  height: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: 10px 0 0 0;
+}
+
+.form-controls {
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.form-controls a:hover {
+  text-decoration: none;
+  color: #0000ff;
+}
+
+.form-controls div {
+  padding: 0;
+}
+
+.button-container button {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+mat-error,
+mat-hint,
+mat-icon {
+  cursor: default;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+.photo-preview {
+  margin: 10px 0 30px 0;
+  text-align: center;
+}
+
+.uploaded-photo button {
+  padding: 4px;
+  width: 100%;
+}
+
+.uploaded-photo img {
+  margin-top: 10px;
+  max-width: 100%;
+}

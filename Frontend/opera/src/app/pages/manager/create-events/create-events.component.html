@@ -1,1 +1,84 @@
-<p>create-events works!</p>
+<div class="container top-margin">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div *ngIf="!isLoading" class="page-header">
+    <h5> Create Event </h5>
+    <div class="page-header-flex-div"></div>
+    <button mat-stroked-button color="primary" [routerLink]="['/']"> Back </button>
+  </div>
+
+  <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="this.serverError = !this.serverError"
+        class="button-top-down-margin"> Retry </button><br>
+      If the error persists, please call technical support with error code ({{errorCode}})
+    </span>
+  </mat-card>
+
+  <form [formGroup]="form" #formDirective="ngForm" (submit)="createEvent(formDirective)"
+    [hidden]="isLoading || serverError">
+
+    <!-- Event Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Event Name</mat-label>
+      <input matInput type="text" formControlName="eventName">
+      <mat-error *ngIf="form.get('eventName').invalid">Please enter the event name</mat-error>
+      <mat-icon matSuffix>tablet_mac</mat-icon>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" formControlName="description">
+      <mat-error *ngIf="form.get('description').invalid">Please enter the event description</mat-error>
+      <mat-icon matSuffix>tablet_mac</mat-icon>
+    </mat-form-field>
+
+    <!-- Date -->
+    <mat-form-field appearance="outline" (click)="picker.open()" (focus)="picker.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="eventDate" (focus)="picker.open()"
+        (keydown)="onCalendarKeydown($event)">
+      <mat-error *ngIf="!picker">You must choose a birth date</mat-error>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Time -->
+    <material-timepicker #timePicker color="primary" label="Time" appearance="outline" [userTime]="exportTime"
+      (focus)="timePicker.showPicker()" (click)="timePicker.showPicker()" (keydown)="onCalendarKeydown($event)"
+      revertLabel="Cancel" submitLabel="Set Time"></material-timepicker>
+
+    <!-- Hall Number -->
+    <mat-form-field appearance="outline">
+      <mat-label>Hall Number</mat-label>
+      <mat-select matInput formControlName="hallNumber" [(value)]="selectedHallNumber" disableOptionCentering
+        panelClass="select-margin">
+        <mat-option *ngFor="let hallNumber of hallNumbersArray" value="{{hallNumber}}"> {{hallNumber}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('hallNumber').invalid">Please choose the hall number</mat-error>
+    </mat-form-field>
+
+    <!-- Poster -->
+    <div class="photo-preview">
+      <div class="uploaded-photo">
+        <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Poster</button>
+        <mat-error *ngIf="form.get('poster').invalid">You must choose a poster</mat-error>
+        <input type="file" accept="image/*" #filePicker (change)="onPosterPicked($event)" style="display: none">
+        <div style="width: 100%;">
+          <img [src]="posterPreview" [alt]="form.value.eventName" *ngIf="posterPreview && form.get('poster').valid"
+            (click)="filePicker.click()" class="cursor-pointer">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-controls row">
+      <div class="col button-container">
+        <button mat-stroked-button color="primary">Create Event</button>
+      </div>
+    </div>
+  </form>
+</div>

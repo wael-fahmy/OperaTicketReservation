@@ -1,1 +1,45 @@
-<p>create-halls works!</p>
+<div class="container top-margin">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div *ngIf="!isLoading" class="page-header">
+    <h5> Create Hall </h5>
+    <div class="page-header-flex-div"></div>
+    <button mat-stroked-button color="primary" [routerLink]="['/']"> Back </button>
+  </div>
+
+  <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="this.serverError = !this.serverError"
+        class="button-top-down-margin"> Retry </button><br>
+      If the error persists, please call technical support with error code ({{errorCode}})
+    </span>
+  </mat-card>
+
+  <form [formGroup]="form" #formDirective="ngForm" (submit)="createHall(formDirective)"
+    [hidden]="isLoading || serverError">
+
+    <!-- Columns -->
+    <mat-form-field appearance="outline">
+      <mat-label>Hall Rows</mat-label>
+      <input matInput type="number" formControlName="rows">
+      <mat-error *ngIf="form.get('rows').invalid">Please enter the hall rows number</mat-error>
+      <mat-icon matSuffix>tablet_mac</mat-icon>
+    </mat-form-field>
+
+    <!-- Rows -->
+    <mat-form-field appearance="outline">
+      <mat-label>Columns</mat-label>
+      <input matInput type="number" formControlName="columns">
+      <mat-error *ngIf="form.get('columns').invalid">Please enter the hall columns number</mat-error>
+      <mat-icon matSuffix>tablet_mac</mat-icon>
+    </mat-form-field>
+
+    <div class="form-controls row">
+      <div class="col button-container">
+        <button mat-stroked-button color="primary">Create Hall</button>
+      </div>
+    </div>
+  </form>
+</div>

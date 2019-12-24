@@ -1,9 +1,11 @@
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './material.module';
+import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { NgModule } from '@angular/core';
 
 import { AuthInterceptor } from './auth/auth-interceptor';
@@ -45,9 +47,11 @@ import { SignupComponent } from './auth/signup/signup.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
+    FlexLayoutModule,
     FormsModule,
     HttpClientModule,
     MaterialModule,
+    MaterialTimePickerModule,
     ReactiveFormsModule,
   ],
   providers: [

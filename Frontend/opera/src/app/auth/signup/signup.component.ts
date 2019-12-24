@@ -5,7 +5,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatSnackBar, MAT_DATE_LOCALE, MatDialogRef } from '@angular/material';
 import { ServerResponse } from '../auth-data.model';
 import { Subscription } from 'rxjs';
-// import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-signup',
@@ -73,6 +72,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     'Tanta',
     'Zagazig'
   ];
+  chosenCity;
   // Form
   form: FormGroup;
   // Photo
