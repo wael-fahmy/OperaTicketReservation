@@ -12,8 +12,6 @@ Reservations_ROUTER.prototype.handleRoutes = function(router, connection) {
     router.use(bodyParser.json());
 
 router.post('/Create', async (req, res) => {
-    Id = req.body.userId;
-    console.log(Id);
     Event_ID =req.body.Event_ID
     UserID  =req.body.UserID 
     Seat_Row  =req.body.Seat_Row
@@ -29,7 +27,8 @@ router.post('/Create', async (req, res) => {
    // console.log (rows)
   })
 })
-    router.post('/delete', async (req, res) => {
+    
+   router.post('/delete', async (req, res) => {
         Id = req.body.Id;
         
         let sql = "CAll DeleteTicket(" +Id+")"

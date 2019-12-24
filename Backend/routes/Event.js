@@ -14,17 +14,16 @@ EVENTS_ROUTER.prototype.handleRoutes = function(router, connection) {
   // create event 
 
 router.post('/Create', async (req, res) => {
-  Id = req.body.userId;
-  console.log(Id);
-  Event_Name =req.body.Event_Name
+  
+  Event_Name = req.body.Event_Name
   Event_Description =req.body.Event_Description 
   Event_Poster =req.body.Event_Poster
-  Event_DateTime=req.body.Event_Date
-  Event_Time=req.body.Event_Time
+  Event_DateTime=req.body.Event_DateTime
   Hall_Number=req.body.Hall_Number
 
-  let sql = "CAll AddEvent(" + Event_Name + "," + Event_Description + "," + Event_Poster + "," + Event_Date + "," + Event_Time + "," + Hall_Number+")"
-  connection.query(sql,(err, rows )=>
+  let sql = "CAll AddEvent('" + Event_Name + "','" + Event_Description + "','" + Event_Poster + "','" +Event_DateTime + "'," + Hall_Number+")"
+  console.log(sql)
+ connection.query(sql,(err, rows )=>
 {   if(err)
   {
     res.status(400).send("something went wrong")      
@@ -42,13 +41,15 @@ Id = req.body.Id;
 Event_Name =req.body.Event_Name
 Event_Description =req.body.Event_Description 
 Event_Poster =req.body.Event_Poster
-Event_Date=req.body.Event_DateTime
+Event_DateTime=req.body.Event_DateTime
 Hall_Number=req.body.Hall_Number
 
-let sql = "CAll UpdateEvent(" + Id +  ","+ Event_Name + "," + Event_Description + "," + Event_Poster + "," + Event_DateTime + "," + Hall_Number+")"
+let sql = "CAll UpdateEvent(" + Id +  ",'"+ Event_Name + "','" + Event_Description + "','" + Event_Poster + "','" + Event_DateTime + "'," + Hall_Number+")"
 connection.query(sql,(err, rows )=>
 {   if(err)
-{
+
+{  console.log(err)
+
   res.status(400).send("something went wrong")      
 }
 
@@ -57,26 +58,6 @@ connection.query(sql,(err, rows )=>
 })
 })
 
-
-router.post('/Update', async (req, res) => {
-  Id = req.body.Id;
-  Event_Name =req.body.Event_Name
-  Event_Description =req.body.Event_Description 
-  Event_Poster =req.body.Event_Poster
-  Event_Date=req.body.Event_DateTime
-  Hall_Number=req.body.Hall_Number
-
-  let sql = "CAll UpdateEvent(" + Id +  ","+ Event_Name + "," + Event_Description + "," + Event_Poster + "," + Event_DateTime + "," + Hall_Number+")"
-  db.query(sql,(err, rows )=>
-{   if(err)
-  {
-    res.status(400).send("something went wrong")      
-  }
-
-   res.status(200).send("added Successfully")
- // console.log (rows)
-})
-})
 
 
 // delete event 
@@ -96,7 +77,7 @@ router.post('/delete', async (req, res) => {
 })
 })
 
-router.post('/get', async (req, res) => {
+router.get('/get', async (req, res) => {
 
   let sql = "CAll GetAllEvent()"
   connection.query(sql,(err, rows )=>
@@ -105,24 +86,24 @@ router.post('/get', async (req, res) => {
   {
     res.status(400).send("something went wrong")      
   }
-res.status(200).send(rows)
+res.status(200).send(rows[0])
 
 })
 })
 
 
 
-router.post('/getbyid', async (req, res) => {
-  Id = req.body.Id;
-  
-  let sql = "CAllGetEventByID(" +Id+")"
+router.get('/getbyid', async (req, res) => {
+  Id = req.query.Id;
+  console.log(Id)
+  let sql = "CAll GetEventByID(" +Id+")"
   connection.query(sql,(err, rows )=>
 {
     if(err)
     {
       res.status(400).send("something went wrong")      
     }
-  res.status(200).send(rows)
+  res.status(200).send(rows[0])
  // console.log (rows)
 })
 })

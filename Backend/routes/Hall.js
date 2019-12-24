@@ -30,7 +30,7 @@ router.get('/get/Available', async (req, res) => {
     let sql = "CAll GetAllAvailableHall()"
     connection.query(sql,(err, rows )=>
   {
-    res.send(rows)
+    res.send(rows[0])
   })
 })
   
@@ -43,23 +43,13 @@ router.get('/get/Id', async (req, res) => {
     let sql = "CAll GetHallById("+ ID +")"
     connection.query(sql,(err, rows )=>
   {
-    res.send(rows)
+    res.send(rows[0])
   })
 })
 
 
 
 // GET hall by id 
-
-router.get('/get/Id', async (req, res) => {
-    
-    ID=req.query.ID
-    let sql = "CAll GetHallById("+ ID +")"
-    connection.query(sql,(err, rows )=>
-  {
-    res.send(rows)
-  })
-})
 
 };  
 
