@@ -26,7 +26,7 @@ export class CancelReservationComponent implements OnInit {
   serverError: boolean;
   errorCode: string;
   isEnglish: boolean;
-  thereAreUsers = false;
+  thereAreReservations = false;
   isLoading = true;
   selected = '-1';
 
@@ -70,19 +70,39 @@ export class CancelReservationComponent implements OnInit {
       });
   }
 
+  pay() {
+    const user = localStorage.getItem('user');
+    const userId = JSON.parse(user).ID;
+    this.isLoading = true;
+    this.http.post(BACKEND_URL + '/Reservations/pay', { userId })
+      .subscribe((response: any) => {
+        this.snackBar.open('Payed all events', null, {
+          duration: 2000,
+        });
+        this.serverError = false;
+        this.errorCode = '';
+        this.ngOnInit();
+      }, error => {
+        console.log(error);
+        this.errorCode = 'A01001032000';
+        this.serverError = true;
+        this.isLoading = false;
+      });
+  }
+
   ngOnInit() {
     this.isLoading = true;
-    this.thereAreUsers = false;
-
-    this.http.post<any>(BACKEND_URL + '/Reservations/get/userId', null)
+    this.thereAreReservations = false;
+    const user = localStorage.getItem('user');
+    const userId = JSON.parse(user).ID;
+    this.http.post<any>(BACKEND_URL + '/Reservations/get/userId', { userId })
       .subscribe((reservationDataReceived: any) => {
-        this.reservationDetails = reservationDataReceived[0];
-        const user = JSON.parse(localStorage.getItem('user'));
-        const ID = user.ID;
-        this.reservationDetails = this.reservationDetails.filter((obj) => {
-          return obj.ID !== ID;
-        });
-        this.thereAreUsers = (this.reservationDetails.length === 0) ? false : true;
+        console.log(reservationDataReceived);
+        this.reservationDetails = reservationDataReceived;
+        // this.reservationDetails = this.reservationDetails.filter((obj) => {
+        //   return obj.ID !== userId;
+        // });
+        this.thereAreReservations = (this.reservationDetails.length === 0) ? false : true;
 
         this.dataSource = new MatTableDataSource(this.reservationDetails);
         this.dataSource.paginator = this.paginator;

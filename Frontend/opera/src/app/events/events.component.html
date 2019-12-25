@@ -17,14 +17,16 @@
       <mat-card-title>{{event.Event_Name}}</mat-card-title>
       <mat-card-subtitle>{{event.Event_DateTime | date:'medium'}}</mat-card-subtitle>
     </mat-card-header>
+    <hr>
     <img mat-card-image src={{event.Event_Poster}} alt="Poster of {{event.Event_Name}}">
+    <hr>
     <mat-card-content>
       <p>{{event.Event_Description  }}</p>
     </mat-card-content>
     <mat-card-actions>
       <!-- <button mat-raised-button color="accent" (click)="reserve(event.ID)">Reserve Seat</button> -->
-      <a *ngIf="isCustomer" [routerLink]="['reservation', event.ID]">Reserve Seat</a>
-      <a *ngIf="isManager" [routerLink]="['reservation', event.ID]">View Seats</a>
+      <a *ngIf="isCustomer" [routerLink]="['reservation', event.ID, event.Hall_Number]">Reserve Seat</a>
+      <a *ngIf="isManager" [routerLink]="['view-seats', event.ID, event.Hall_Number]">View Seats</a>
     </mat-card-actions>
   </mat-card>
 </div>

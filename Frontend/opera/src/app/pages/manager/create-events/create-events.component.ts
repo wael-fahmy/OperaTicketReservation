@@ -61,7 +61,7 @@ export class CreateEventsComponent implements OnInit {
     formJSON.Event_DateTime.setMinutes(this.exportTime.minute);
     formJSON.Event_DateTime = new Date(formJSON.Event_DateTime);
     // formJSON.Event_Poster = this.posterPreview;
-    formJSON.Event_Poster = 'https://i.ibb.co/DR90x4G/F.png';
+    // formJSON.Event_Poster = 'https://i.ibb.co/DR90x4G/F.png';
     this.isLoading = true;
     this.http.post<any>(BACKEND_URL + '/Events/Create', formJSON)
       .subscribe((serverResponse: any) => {
@@ -102,6 +102,8 @@ export class CreateEventsComponent implements OnInit {
     this.form.patchValue({ Event_Poster: file });
     this.form.get('Event_Poster').updateValueAndValidity();
     const reader = new FileReader();
+    // const frm = new FormData();
+    // frm.append('image', file);
     reader.onload = () => {
       this.posterPreview = reader.result;
     };

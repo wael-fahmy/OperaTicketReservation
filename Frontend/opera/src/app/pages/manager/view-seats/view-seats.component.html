@@ -1,1 +1,20 @@
-<p>view-seats works!</p>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div class="container" style="margin-top: 10px;" *ngIf="!isLoading">
+  <div class="page-header" *ngIf="!isLoading">
+    <h5> Reserve Seat </h5>
+    <div class="page-header-flex-div"></div>
+    <button mat-stroked-button color="primary" [routerLink]="['/']"> Back </button>
+  </div>
+  <div>
+
+  </div>
+  <div>
+
+  </div>
+  <mat-grid-list cols="{{columns}}" rowHeight="2:1" style="margin-top: 10px;">
+    <mat-grid-tile *ngFor="let element of Array2D; let i = index"
+      [ngClass]="{'free': element == 0, 'reserved': element == 1}">
+      {{i+1}}</mat-grid-tile>
+  </mat-grid-list>
+</div>

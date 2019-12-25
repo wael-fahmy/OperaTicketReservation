@@ -61,7 +61,7 @@ const routes: Routes = [
     data: { authority: 'Opera_Management' }
   },
   {
-    path: 'view-seats/:hallID',
+    path: 'view-seats/:eventId/:hallId',
     component: ViewSeatsComponent,
     canActivate: [RoleGuard],
     data: { authority: 'Opera_Management' }
@@ -78,13 +78,13 @@ const routes: Routes = [
     canActivate: [SignedInGuard]
   },
   {
-    path: 'cancel-reservation',
+    path: 'my-reservation',
     component: CancelReservationComponent,
     canActivate: [RoleGuard],
     data: { authority: 'Customer' }
   },
   {
-    path: 'reservation:eventID',
+    path: 'reservation/:eventId/:hallId',
     component: ReservationComponent,
     canActivate: [RoleGuard],
     data: { authority: 'Customer' }

@@ -20,7 +20,7 @@
   <form [formGroup]="form" (submit)="editProfile()" [hidden]="isLoading">
 
     <div class="form-design">
-      <p> Sign Up </p>
+      <p> Edit Profile </p>
     </div>
 
     <!-- First Name -->
@@ -42,8 +42,8 @@
     <!-- D. O. B. -->
     <mat-form-field appearance="outline" (click)="picker.open()" (focus)="picker.open()">
       <mat-label>Birth Date</mat-label>
-      <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="Birth_Date"
-        (focus)="picker.open()" (keydown)="onCalendarKeydown($event)" value={{userData?.Birth_Date}}>
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="Birth_Date" (focus)="picker.open()"
+        (keydown)="onCalendarKeydown($event)" value={{userData?.Birth_Date}}>
       <mat-error *ngIf="!picker">You must choose a birth date</mat-error>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
@@ -52,7 +52,8 @@
     <!-- Gender -->
     <mat-form-field appearance="outline">
       <mat-label>Gender</mat-label>
-      <mat-select matInput formControlName="Gender" disableOptionCentering panelClass="select-margin" value={{userData?.Gender}}>
+      <mat-select matInput formControlName="Gender" disableOptionCentering panelClass="select-margin"
+        value={{userData?.Gender}}>
         <mat-option>None</mat-option>
         <mat-option value="F">Female</mat-option>
         <mat-option value="M">Male</mat-option>
@@ -63,7 +64,8 @@
     <!-- City -->
     <mat-form-field appearance="outline">
       <mat-label>City</mat-label>
-      <mat-select matInput formControlName="City" disableOptionCentering panelClass="select-margin"  value={{userData?.City}}>
+      <mat-select matInput formControlName="City" disableOptionCentering panelClass="select-margin"
+        value={{userData?.City}}>
         <mat-option *ngIf="!cityArray" value="-1">None</mat-option>
         <mat-option *ngFor="let city of cityArray, let k = index" value="{{city}}">{{city}}</mat-option>
       </mat-select>
@@ -92,4 +94,23 @@
       </div>
     </div>
   </form>
+
+  <form [formGroup]="form2" (submit)="editPassword()" [hidden]="isLoading">
+
+    <!-- Password -->
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input [type]="hide ? 'password' : 'text'" matInput formControlName="User_Password" minlength="8">
+      <mat-error *ngIf="form2.get('User_Password').invalid">Minimum 8 characters</mat-error>
+      <mat-icon mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide" class="cursor-pointer">{{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
+    </mat-form-field>
+
+    <div class="form-controls row">
+      <div class="col button-container">
+        <button mat-stroked-button color="primary" class="float-right"> Edit Password </button>
+      </div>
+    </div>
+  </form>
+
 </mat-card>

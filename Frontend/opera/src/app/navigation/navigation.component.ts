@@ -132,8 +132,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
         this.admin = false;
         this.customer = false;
         break;
-      case 'Opera_Management': // Customer
-        this.manager = true;
+      case 'Customer': // Customer
+        this.manager = false;
         this.admin = false;
         this.customer = true;
         break;

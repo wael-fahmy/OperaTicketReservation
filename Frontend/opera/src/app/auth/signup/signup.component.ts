@@ -25,6 +25,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   // Birth date picker server response
   date = new Date();
   minDate = new Date(1940, 0, 1);
+  maxDate = new Date(this.date.getFullYear() - 18, this.date.getMonth(), this.date.getDate());
   // Gender
   gender = '';
   // Arrays for address

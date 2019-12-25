@@ -202,6 +202,7 @@ export class AuthService {
     this.errorCodeLogout = '';
     this.errorCodeLogoutListener.next('');
     this.router.navigate(['/']);
+    location.reload();
     return;
   }
 

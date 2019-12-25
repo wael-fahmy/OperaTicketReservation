@@ -60,7 +60,7 @@
     <!-- D. O. B. -->
     <mat-form-field appearance="outline" (click)="picker.open()" (focus)="picker.open()">
       <mat-label>Birth Date</mat-label>
-      <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="Birth_Date"
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="Birth_Date"
         (focus)="picker.open()" (keydown)="onCalendarKeydown($event)">
       <mat-error *ngIf="!picker">You must choose a birth date</mat-error>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
