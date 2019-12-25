@@ -62,7 +62,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             <span> Birth Date </span>
           </th>
-          <td mat-cell *matCellDef="let row"> {{row.Birth_Date || "—"}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.Birth_Date | date:'mediumDate' || "—"}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Gender">

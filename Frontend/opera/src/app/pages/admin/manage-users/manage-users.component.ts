@@ -75,10 +75,9 @@ export class ManageUsersComponent implements OnInit {
       });
   }
 
-  // TODO:
-  updateUser(ID: number, authority: number) {
+  updateUser(ID: number, Title: string) {
     this.isLoading = true;
-    this.http.post(BACKEND_URL + 'user', { ID, authority })
+    this.http.post(BACKEND_URL + '/Users/UpdateUserTitle', { ID, Title })
       .subscribe((response: any) => {
         this.snackBar.open('Updated user with ID: ' + ID.toString(), null, {
           duration: 2000,
@@ -116,10 +115,14 @@ export class ManageUsersComponent implements OnInit {
     this.isLoading = true;
     this.thereAreUsers = false;
 
-    this.http.post<any>(BACKEND_URL + '/Users/getAllUsers', null)
-      .subscribe((usersDataReceived: User[]) => {
-        this.userDetails = usersDataReceived;
-
+    this.http.post<any>(BACKEND_URL + '/Users/GetAllUser', null)
+      .subscribe((usersDataReceived: any) => {
+        this.userDetails = usersDataReceived[0];
+        const user = JSON.parse(localStorage.getItem('user'));
+        const ID = user.ID;
+        this.userDetails = this.userDetails.filter((obj) => {
+          return obj.ID !== ID;
+        });
         this.thereAreUsers = (this.userDetails.length === 0) ? false : true;
 
         this.dataSource = new MatTableDataSource(this.userDetails);

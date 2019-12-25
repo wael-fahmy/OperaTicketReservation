@@ -3,7 +3,7 @@
   <mat-card class="card-border" *ngFor="let event of eventsList" style="margin-bottom: 10px;">
     <mat-card-header>
       <mat-card-title>{{event.Event_Name}}</mat-card-title>
-      <mat-card-subtitle>{{event.Event_DateTime  | date:'medium'}}</mat-card-subtitle>
+      <mat-card-subtitle>{{event.Event_DateTime | date:'medium'}}</mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image src={{event.Event_Poster}} alt="Photo of a Shiba Inu">
     <mat-card-content>
