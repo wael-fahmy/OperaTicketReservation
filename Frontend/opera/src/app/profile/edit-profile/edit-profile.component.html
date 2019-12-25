@@ -1,0 +1,95 @@
+<div class="container top-margin" *ngIf="serverError && !isLoading">
+
+  <div *ngIf="!isLoading" class="page-header">
+    <h5> Edit Profile </h5>
+  </div>
+
+  <mat-card class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="ngOnInit()" class="button-top-down-margin"> Retry </button> <br>
+      If the error persists, please call technical support with error code ({{errorCode}}).
+    </span>
+  </mat-card>
+</div>
+
+<mat-card class="form-container card-border" [hidden]="serverError">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form [formGroup]="form" (submit)="editProfile()" [hidden]="isLoading">
+
+    <div class="form-design">
+      <p> Sign Up </p>
+    </div>
+
+    <!-- First Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" formControlName="First_Name" value={{userData?.First_Name}}>
+      <mat-error *ngIf="form.get('First_Name').invalid">Please enter your first name with only letters</mat-error>
+      <mat-icon matSuffix>account_circle</mat-icon>
+    </mat-form-field>
+
+    <!-- Last Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="Last_Name" value={{userData?.Last_Name}}>
+      <mat-error *ngIf="form.get('Last_Name').invalid">Please enter your last name with only letters</mat-error>
+      <mat-icon matSuffix>account_box</mat-icon>
+    </mat-form-field>
+
+    <!-- D. O. B. -->
+    <mat-form-field appearance="outline" (click)="picker.open()" (focus)="picker.open()">
+      <mat-label>Birth Date</mat-label>
+      <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="Birth_Date"
+        (focus)="picker.open()" (keydown)="onCalendarKeydown($event)" value={{userData?.Birth_Date}}>
+      <mat-error *ngIf="!picker">You must choose a birth date</mat-error>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Gender -->
+    <mat-form-field appearance="outline">
+      <mat-label>Gender</mat-label>
+      <mat-select matInput formControlName="Gender" disableOptionCentering panelClass="select-margin" value={{userData?.Gender}}>
+        <mat-option>None</mat-option>
+        <mat-option value="F">Female</mat-option>
+        <mat-option value="M">Male</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('Gender').invalid">You must choose a gender</mat-error>
+    </mat-form-field>
+
+    <!-- City -->
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <mat-select matInput formControlName="City" disableOptionCentering panelClass="select-margin"  value={{userData?.City}}>
+        <mat-option *ngIf="!cityArray" value="-1">None</mat-option>
+        <mat-option *ngFor="let city of cityArray, let k = index" value="{{city}}">{{city}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('City').invalid">You must choose a city</mat-error>
+    </mat-form-field>
+
+    <!-- Address -->
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
+      <input matInput type="text" formControlName="User_Address" value={{userData?.User_Address}}>
+      <mat-icon matSuffix>account_circle</mat-icon>
+    </mat-form-field>
+
+    <!-- Password -->
+    <!-- <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input [type]="hide ? 'password' : 'text'" matInput formControlName="User_Password" minlength="8">
+      <mat-error *ngIf="form.get('User_Password').invalid">Minimum 8 characters</mat-error>
+      <mat-icon mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide" class="cursor-pointer">{{hide ? 'visibility_off' : 'visibility'}} </mat-icon>
+    </mat-form-field> -->
+
+    <div class="form-controls row">
+      <div class="col button-container">
+        <button mat-stroked-button color="primary" class="float-right"> Edit </button>
+      </div>
+    </div>
+  </form>
+</mat-card>

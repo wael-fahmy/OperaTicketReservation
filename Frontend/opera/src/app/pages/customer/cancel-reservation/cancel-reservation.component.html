@@ -1,1 +1,84 @@
-<p>cancel-reservation works!</p>
+<div class="container top-margin">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <div class="page-header" *ngIf="!isLoading">
+    <h5> Cancel Reservations </h5>
+    <div class="page-header-flex-div"></div>
+    <button mat-stroked-button color="primary" [routerLink]="['/']"> Back </button>
+  </div>
+
+  <div *ngIf="!thereAreUsers && !isLoading && !serverError" class="error-or-none-found">
+    <span> No Reservations Found </span>
+  </div>
+
+  <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="ngOnInit()" class="button-top-down-margin"> Retry </button> <br>
+      If the error persists, please call technical support with error code ({{errorCode}})
+    </span>
+  </mat-card>
+
+  <div [hidden]="isLoading || !thereAreUsers || serverError">
+    <div>
+      <mat-form-field class="form-width">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+
+    <div class="table-overflow mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Reservation ID </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.ID || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Event_ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Event ID </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Event_ID || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Seat_Row">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Seat Row </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Seat_Row || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Seat_Col">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Seat Column </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Seat_Col || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Paid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span> Paid </span>
+          </th>
+          <td mat-cell *matCellDef="let row"> {{row.Paid | date:'mediumDate' || "—"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            <span> Action </span>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-raised-button color="warn" (click)="cancelReservation(row.ID)"> Cancel </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" class="data">
+        </tr>
+      </table>
+    </div>
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

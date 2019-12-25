@@ -1,0 +1,32 @@
+.form-width {
+  width: 100%;
+  margin-top: 10px;
+}
+
+tr.data:hover {
+  background: #d0d0d0;
+}
+
+table {
+  width: 100%;
+  overflow: auto;
+}
+
+.table-overflow {
+  width: 100%;
+  overflow: auto;
+}
+
+mat-paginator {
+  width: 100%;
+}
+
+td.mat-cell,
+th.mat-header-cell {
+  padding: 0 10px !important;
+}
+
+button {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}

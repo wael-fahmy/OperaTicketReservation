@@ -15,6 +15,8 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { CancelReservationComponent } from './pages/customer/cancel-reservation/cancel-reservation.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { ViewSeatsComponent } from './pages/manager/view-seats/view-seats.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -58,10 +60,21 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { authority: 'Opera_Management' }
   },
+  {
+    path: 'view-seats/:hallID',
+    component: ViewSeatsComponent,
+    canActivate: [RoleGuard],
+    data: { authority: 'Opera_Management' }
+  },
   // Customer
   {
     path: 'profile/:uid',
     component: ProfileComponent,
+    canActivate: [SignedInGuard]
+  },
+  {
+    path: 'edit-profile/:uid',
+    component: EditProfileComponent,
     canActivate: [SignedInGuard]
   },
   {

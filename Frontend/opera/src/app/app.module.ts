@@ -26,6 +26,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ViewSeatsComponent } from './pages/manager/view-seats/view-seats.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { SignupComponent } from './auth/signup/signup.component';
     ReservationComponent,
     SigninComponent,
     SignupComponent,
+    ViewSeatsComponent,
+    EditProfileComponent,
   ],
   imports: [
     AppRoutingModule,

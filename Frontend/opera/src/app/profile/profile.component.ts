@@ -32,11 +32,10 @@ export class ProfileComponent implements OnInit {
   snapshotParam: number;
   currentUserID: number;
   enableBack: boolean;
-  enableEdit: boolean;
-  viewMode = true;
+  enableEdit = true;
+  editMode = false;
   userData: User;
-
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
@@ -56,43 +55,21 @@ export class ProfileComponent implements OnInit {
     window.history.back();
   }
 
-  edit() {
-    this.isLoading = true;
-    this.viewMode = true;
-    this.isThereUser = false;
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
+  onCalendarKeydown(event) {
+    return !event;
   }
 
-  save() {
-    this.isLoading = true;
-    this.viewMode = true;
-    this.isThereUser = false;
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 2000);
-    this.ngOnInit();
+  edit() {
+    this.router.navigate(['edit-profile', this.snapshotParam]);
   }
 
   ngOnInit() {
     this.enableBack = (window.history.length === 1) ? false : true;
     this.isLoading = true;
-    this.viewMode = true;
     this.isThereUser = false;
     // tslint:disable-next-line: radix
     this.snapshotParam = parseInt(this.route.snapshot.paramMap.get('uid'));
-    // tslint:disable-next-line: radix
-    try {
-      // tslint:disable-next-line: radix
-      const user = localStorage.getItem('user');
-      this.currentUserID = JSON.parse(user).ID;
-      this.enableEdit = (this.snapshotParam === this.currentUserID) ? true : false;
-    } catch (error) {
-      this.enableEdit = false;
-    }
-    // tslint:disable-next-line: radix
-    this.http.post<any>(BACKEND_URL + '/user/getUserByID', this.snapshotParam)
+    this.http.post<any>(BACKEND_URL + '/Users/GetUserByID', { ID: this.snapshotParam })
       .subscribe((userDataReceived: User) => {
         this.isThereUser = (!userDataReceived.Email) ? false : true;
 
