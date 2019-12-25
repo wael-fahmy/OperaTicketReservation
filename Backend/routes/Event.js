@@ -16,20 +16,19 @@ EVENTS_ROUTER.prototype.handleRoutes = function(router, connection) {
 router.post('/Create', async (req, res) => {
   
   Event_Name = req.body.Event_Name
-  Event_Description =req.body.Event_Description 
+  Event_Description =req.body.Event_Description
   Event_Poster =req.body.Event_Poster
   Event_DateTime=req.body.Event_DateTime
   Hall_Number=req.body.Hall_Number
 
   let sql = "CAll AddEvent('" + Event_Name + "','" + Event_Description + "','" + Event_Poster + "','" +Event_DateTime + "'," + Hall_Number+")"
-  console.log(sql)
  connection.query(sql,(err, rows )=>
 {   if(err)
   {
-    res.status(400).send("something went wrong")      
+    res.status(400).send({message: "something went wrong"})      
   }
 
-   res.status(200).send("added Successfully")
+   res.status(200).send({message: "added Successfully"})
  // console.log (rows)
 })
 })
@@ -70,14 +69,14 @@ router.post('/delete', async (req, res) => {
 {
   if(err)
   {
-    res.status(400).send("something went wrong")      
+  res.status(400).send({message: "something went wrong"})      
   }
-  res.status(200).send("deleted Successfully")
+  res.status(200).send({message: "deleted Successfully"})
  // console.log (rows)
 })
 })
 
-router.get('/get', async (req, res) => {
+router.post('/get', async (req, res) => {
 
   let sql = "CAll GetAllEvent()"
   connection.query(sql,(err, rows )=>

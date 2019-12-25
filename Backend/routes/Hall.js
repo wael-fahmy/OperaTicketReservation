@@ -18,15 +18,20 @@ router.post('/Create', async (req, res) => {
     let sql = "CAll CreateHAll(" + Number_Cols + "," + Number_Rows +")"
     connection.query(sql,(err, rows )=>
   {
-    res.send("added Successfully")
-    console.log (rows)
+    if(err)
+
+    {  console.log(err)
+    
+      res.status(400).send({ message: "something went wrong"})
+    }
+    
+     res.status(200).send({ message: "added Successfully"})
   })
 })
-  
 
 // GET  event 
 
-router.get('/get/Available', async (req, res) => {
+router.post('/get/Available', async (req, res) => {
     let sql = "CAll GetAllAvailableHall()"
     connection.query(sql,(err, rows )=>
   {
