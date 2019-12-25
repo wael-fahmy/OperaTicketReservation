@@ -136,23 +136,22 @@ export class AuthService {
     const authData: LoginData = { UserName, User_Password };
     return this.http.post<SignInResponse>(BACKEND_URL + '/Users/SignIn', authData)
       .subscribe(response => {
-        if (response.user.ID) {
-          // const expiresInDuration = response.expiresIn;
-          // this.setAuthTimer(expiresInDuration);
-          this.isAuthenticated = true;
-          this.authority = response.user.Title;
-          this.userID = response.user.ID.toString();
-          this.authStatusListener.next(true);
-          this.authAuthorityListener.next(response.user.Title);
-          this.userIDListener.next(response.user.ID.toString());
+        delete response.user.User_Password;
+        // const expiresInDuration = response.expiresIn;
+        // this.setAuthTimer(expiresInDuration);
+        this.isAuthenticated = true;
+        this.authority = response.user.Title;
+        this.userID = response.user.ID.toString();
+        this.authStatusListener.next(true);
+        this.authAuthorityListener.next(response.user.Title);
+        this.userIDListener.next(response.user.ID.toString());
 
-          this.serverErrorLogin = false;
-          this.serverErrorLoginListener.next(false);
-          this.errorCodeLogin = '';
-          this.errorCodeLoginListener.next('');
-          this.saveAuthData(response.user);
-          this.router.navigate(['/']);
-        }
+        this.serverErrorLogin = false;
+        this.serverErrorLoginListener.next(false);
+        this.errorCodeLogin = '';
+        this.errorCodeLoginListener.next('');
+        this.saveAuthData(response.user);
+        this.router.navigate(['/']);
       }, error => {
         console.log(error);
         if (error.error.message) {
@@ -190,70 +189,20 @@ export class AuthService {
       this.router.navigate(['/']);
       return;
     }
-    // TODO:
-    this.http.post<any>(BACKEND_URL + '/logout', { ID })
-      .subscribe(response => {
-        if (response.message === '00') {
-          this.isAuthenticated = false;
-          this.authority = '';
-          this.userID = '';
-          this.authStatusListener.next(false);
-          this.authAuthorityListener.next('');
-          this.userIDListener.next('');
-          this.clearAuthData();
+    this.isAuthenticated = false;
+    this.authority = '';
+    this.userID = '';
+    this.authStatusListener.next(false);
+    this.authAuthorityListener.next('');
+    this.userIDListener.next('');
+    this.clearAuthData();
 
-          this.serverErrorLogout = false;
-          this.serverErrorLogoutListener.next(false);
-          this.errorCodeLogout = '';
-          this.errorCodeLogoutListener.next('');
-          this.router.navigate(['/']);
-          return;
-        }
-      }, error => {
-        console.log(error);
-        if (error.error.message) {
-          this.errorCodeLogout = error.error.message;
-          this.errorCodeLogoutListener.next(this.errorCodeLogout);
-          this.serverErrorLogout = true;
-          this.serverErrorLogoutListener.next(true);
-        } else {
-          // Can't Reach Server
-          this.errorCodeLogout = 'A01001002000';
-          this.errorCodeLogoutListener.next('A01001002000');
-          this.serverErrorLogout = true;
-          this.serverErrorLogoutListener.next(true);
-        }
-
-        switch (error.error.message) {
-          case '01':  // User already logged out
-          case '02':  //
-          case 'FC':  // Catch Block
-          case 'FD':  //
-          case 'FE':  //
-          case 'FF':  // Not Found
-            this.isAuthenticated = false;
-            this.authority = '';
-            this.userID = '';
-            this.authStatusListener.next(false);
-            this.authAuthorityListener.next('');
-            this.userIDListener.next('');
-            this.clearAuthData();
-
-            this.serverErrorLogout = false;
-            this.serverErrorLogoutListener.next(false);
-            this.errorCodeLogout = '';
-            this.errorCodeLogoutListener.next('');
-            this.router.navigate(['/']);
-            return;
-          default:
-            break;
-        }
-        // 404
-        this.authStatusListener.next(true);
-        this.authAuthorityListener.next(localStorage.getItem('authority'));
-        this.userIDListener.next(localStorage.getItem('userID'));
-      }
-      );
+    this.serverErrorLogout = false;
+    this.serverErrorLogoutListener.next(false);
+    this.errorCodeLogout = '';
+    this.errorCodeLogoutListener.next('');
+    this.router.navigate(['/']);
+    return;
   }
 
   signoutOnError() {

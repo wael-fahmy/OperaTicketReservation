@@ -24,7 +24,7 @@ export class CreateEventsComponent implements OnInit {
   selectedHallNumber;
   posterPreview;
   minDate = new Date();
-  exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
+  exportTime = { hour: this.minDate.getHours(), minute: this.minDate.getMinutes(), meriden: 'PM', format: 24 };
   form: FormGroup;
 
   dialogRef: MatDialogRef<ErrorComponent>;
@@ -54,11 +54,12 @@ export class CreateEventsComponent implements OnInit {
       }
       return;
     }
+
     // Send photo as base64 instead of whole file
-    // this.form.get('poster').setValue(this.posterPreview);
     const formJSON = this.form.getRawValue();
-    formJSON.eventDate.setHours(this.exportTime.hour);
-    formJSON.eventDate.setMinutes(this.exportTime.minute);
+    formJSON.Event_DateTime.setHours(this.exportTime.hour);
+    formJSON.Event_DateTime.setMinutes(this.exportTime.minute);
+    formJSON.Event_Poster = this.posterPreview;
     this.isLoading = true;
     this.http.post<any>(BACKEND_URL + '/Events/Create', formJSON)
       .subscribe((serverResponse: any) => {
@@ -96,8 +97,8 @@ export class CreateEventsComponent implements OnInit {
       return;
     }
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ poster: file });
-    this.form.get('poster').updateValueAndValidity();
+    this.form.patchValue({ Event_Poster: file });
+    this.form.get('Event_Poster').updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
       this.posterPreview = reader.result;
@@ -108,10 +109,15 @@ export class CreateEventsComponent implements OnInit {
   ngOnInit() {
     this.exportTime.hour = this.minDate.getHours();
     this.exportTime.minute = this.minDate.getMinutes();
-    // TODO: Get Hall Numbers
     this.isLoading = true;
-    this.http.post<any>(BACKEND_URL + '/halls/numbers', null)
+    this.http.post<any>(BACKEND_URL + '/Halls/get/Available', null)
       .subscribe((serverResponse: any) => {
+        if (serverResponse.length === 0) {
+          this.snackBar.open('No Free Halls', null, {
+            duration: 3000,
+          });
+          return;
+        }
         this.hallNumbersArray = serverResponse;
         this.serverError = false;
         this.errorCode = '';
@@ -120,11 +126,12 @@ export class CreateEventsComponent implements OnInit {
       });
     this.isLoading = false;
     this.form = new FormGroup({
-      eventName: new FormControl(null, { validators: [Validators.required] }),
-      description: new FormControl(null, { validators: [Validators.required] }),
-      eventDate: new FormControl(null, { validators: [Validators.required] }),
-      hallNumber: new FormControl(null, { validators: [Validators.required] }),
-      poster: new FormControl(null, { asyncValidators: [mimeType], validators: [Validators.required] }),
+      Event_Name: new FormControl(null, { validators: [Validators.required] }),
+      Event_Description: new FormControl(null, { validators: [Validators.required] }),
+      // Event_Poster: new FormControl(null),
+      Event_Poster: new FormControl(null, { asyncValidators: [mimeType], validators: [Validators.required] }),
+      Event_DateTime: new FormControl(null, { validators: [Validators.required] }),
+      Hall_Number: new FormControl(null, { validators: [Validators.required] }),
     });
   }
 }

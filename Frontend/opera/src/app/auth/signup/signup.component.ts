@@ -114,32 +114,9 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     this.signupSubscription = this.authService.getSignupUpdated()
       .subscribe((serverResponse: any) => {
-        if (serverResponse.message !== '00') {
-          if (this.dialog.openDialogs.length === 0) {
-            this.dialogRef =
-              this.dialog.open(ErrorComponent, { data: { message: serverResponse.message }, panelClass: 'my-dialog' });
-          }
-          this.serverErrorSubscription = this.authService.getServerErrorSignUpListener()
-            .subscribe((serverErrorSignUpResponse: boolean) => {
-              this.isLoading = false;
-              this.serverError = serverErrorSignUpResponse;
-            });
-
-          this.errorCodeSubscription = this.authService.getErrorCodeSignUpListener()
-            .subscribe((serverErrorSignUpResponse: string) => {
-              this.isLoading = false;
-              this.errorCode = serverErrorSignUpResponse;
-            });
-
-          try { this.signupSubscription.unsubscribe(); } catch (error) { }
-          try { this.serverErrorSubscription.unsubscribe(); } catch (error) { }
-          try { this.errorCodeSubscription.unsubscribe(); } catch (error) { }
-          return;
-        } else {
-          this.snackBar.open(serverResponse.message, null, {
-            duration: 2500,
-          });
-        }
+        this.snackBar.open('Signed Up Successfuly', null, {
+          duration: 2500,
+        });
       }, error => {
         console.log(error);
         try { this.signupSubscription.unsubscribe(); } catch (error) { }

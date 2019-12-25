@@ -89,6 +89,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
     this.authService.signout();
 
+    setTimeout(() => { this.isLoading = false; }, 1000);
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isLoading = false;

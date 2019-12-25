@@ -47,7 +47,7 @@ export class CreateHallsComponent implements OnInit {
     }
     const formJSON = this.form.getRawValue();
     this.isLoading = true;
-    this.http.post<any>(BACKEND_URL + '/event/create', formJSON)
+    this.http.post<any>(BACKEND_URL + '/Halls/Create', formJSON)
       .subscribe((serverResponse: any) => {
         this.snackBar.open('Successfully Created Hall', null, {
           duration: 3000,
@@ -90,8 +90,8 @@ export class CreateHallsComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      Number_Rows: new FormControl(null, { validators: [Validators.required] }),
       Number_Cols: new FormControl(null, { validators: [Validators.required] }),
+      Number_Rows: new FormControl(null, { validators: [Validators.required] }),
     });
   }
 }
