@@ -116,6 +116,20 @@ USER_ROUTER.prototype.handleRoutes = function (router, connection) {
   });
 
 
+  router.all("/GetUserByID", function (req, res) {
+    query = "CALL GetUserById(?)"
+    var userID = req.body["ID"];
+    query = mysql.format(query, userID);
+    connection.query(query, function (err, rows) {
+      if (err) {
+        console.log(err);
+        res.json({ Error: true, Message: "Error executing MySQL query GetUserByID" });
+      } else {
+        res.status(200).send(rows[0][0])
+      }
+    });
+  });
+
   router.all("/VerifyUser", function (req, res) {
     query = "CALL VerifyUser(?);"
     var userID = req.body["ID"];
