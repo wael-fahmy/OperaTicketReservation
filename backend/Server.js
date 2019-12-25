@@ -1,5 +1,7 @@
 var express = require("express");
 var mysql = require("mysql");
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 var application_root = __dirname;
 var app = express();
 
@@ -11,7 +13,7 @@ var Users = require('./routes/Users.js');
 var Events = require('./routes/Event.js');
 var Halls = require('./routes/Hall.js');
 var Reservations = require('./routes/Reservatios.js');
-
+var Uploads = require('./routes/Upload.js');
 
 function REST() {
   var self = this;
@@ -56,18 +58,19 @@ REST.prototype.configureExpress = function (connection) {
   var EventsRouter = express.Router();
   var HallsRouter = express.Router();
   var ReservationsRouter = express.Router();
-
+  var UploadsRouter = express.Router();
 
   app.use('/api/Users', UsersRouter);
   app.use('/api/Halls', HallsRouter);
   app.use('/api/Events', EventsRouter);
   app.use('/api/Reservations', ReservationsRouter);
-
+  app.use('/api/Upload', UploadsRouter);
   //Instantiate the Routes:
   new Users(UsersRouter, connection);
   new Halls(HallsRouter, connection);
   new Events(EventsRouter, connection);
   new Reservations(ReservationsRouter, connection);
+  new Uploads(UploadsRouter, connection);
 
   self.startServer();
 };

@@ -147,7 +147,7 @@ USER_ROUTER.prototype.handleRoutes = function (router, connection) {
   //Update User Information (Name, Photo, Bithdate)
 
   router.post('/UpdateUserInfo', async (req, res) => {
-    query = "CALL UpdateUserInfo(?,?,?,?,?,?,?,?);"
+    query = "CALL UpdateUserInfo(?,?,?,?,?,?,?);"
     Table =
       [
         req.body["ID"],
@@ -156,8 +156,8 @@ USER_ROUTER.prototype.handleRoutes = function (router, connection) {
         req.body["Birth_Date"],
         req.body["Gender"],
         req.body["City"],
-        req.body["User_Address"],
-        req.body["Email"]
+        req.body["User_Address"]
+    
 
       ];
     query = mysql.format(query, Table);
@@ -166,7 +166,7 @@ USER_ROUTER.prototype.handleRoutes = function (router, connection) {
         console.log(err);
         res.json({ Error: true, Message: "Error executing MySQL query UpdateUserInfo" });
       } else {
-        res.status(200).send(rows)
+        res.status(200).send({message:"success"})
       }
     });
   });

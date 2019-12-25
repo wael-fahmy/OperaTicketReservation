@@ -39,7 +39,7 @@ HALLS_ROUTER.prototype.handleRoutes = function (router, connection) {
 
   // GET hall by id 
 
-  router.get('/get/Id', async (req, res) => {
+  router.post('/get/Id', async (req, res) => {
 
     ID = req.query.ID
     let sql = "CAll GetHallById(" + ID + ")"

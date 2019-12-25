@@ -15,7 +15,7 @@ End;
 
 CREATE PROCEDURE GetAllAvailableHall()
 Begin
-Select *
+Select Hall_Number
 From Halls
 Where  IsAvailable = TRUE;
 End;

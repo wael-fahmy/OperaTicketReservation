@@ -19,10 +19,10 @@ Reservations_ROUTER.prototype.handleRoutes = function (router, connection) {
     let sql = "CAll  NewTicket(" + Event_ID + "," + UserID + "," + Seat_Row + "," + Seat_Col + ")"
     connection.query(sql, (err, rows) => {
       if (err) {
-        res.status(400).send("something went wrong")
+        res.status(400).send({message: "something went wrong"})
       }
 
-      res.status(200).send("added Successfully")
+      res.status(200).send({message: "added Successfully"})
       // console.log (rows)
     })
   })
@@ -33,17 +33,17 @@ Reservations_ROUTER.prototype.handleRoutes = function (router, connection) {
     let sql = "CAll DeleteTicket(" + Id + ")"
     connection.query(sql, (err, rows) => {
       if (err) {
-        res.status(400).send("something went wrong")
+        res.status(400).send({message: "something went wrong"})
       }
-      res.status(200).send("deleted Successfully")
+      res.status(200).send({message: "deleted Successfully"})
       // console.log (rows)
     })
   })
 
 
 
-  router.get('/get/userId', async (req, res) => {
-    Id = req.query.userId;
+  router.post('/get/userId', async (req, res) => {
+    Id = req.body.userId;
 
     let sql = "CAll  GetTicketByUserId(" + Id + ")"
     connection.query(sql, (err, rows) => {
@@ -69,14 +69,14 @@ Reservations_ROUTER.prototype.handleRoutes = function (router, connection) {
 
 
   router.post('/pay', async (req, res) => {
-    Id = req.body.ticketId;
+    Id = req.body.userId;
 
     let sql = "CAll payTicket(" + Id + ")"
     connection.query(sql, (err, rows) => {
       if (err) {
-        res.status(400).send("something went wrong")
+        res.status(400).send({message: "something went wrong"})
       }
-      res.status(200).send("paid Successfully")
+      res.status(200).send({message: "paid Successfully"})
       // console.log (rows)
     })
   })
