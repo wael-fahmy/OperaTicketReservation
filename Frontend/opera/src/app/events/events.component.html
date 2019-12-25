@@ -1,11 +1,23 @@
 <div class="container" style="margin-top: 10px; align-items: center;">
   <h4>All Events</h4>
+  <div *ngIf="!thereAreEvents && !isLoading && !serverError" class="error-or-none-found">
+    <span> No Events Found </span>
+  </div>
+  <mat-card *ngIf="serverError && !isLoading" class="warning-card error-or-none-found">
+    <span>
+      An error occured while communicating with the server. <br>
+      Please retry again later. <br>
+      <button mat-raised-button color="warn" (click)="this.serverError = !this.serverError"
+        class="button-top-down-margin"> Retry </button><br>
+      If the error persists, please call technical support with error code ({{errorCode}})
+    </span>
+  </mat-card>
   <mat-card class="card-border" *ngFor="let event of eventsList" style="margin-bottom: 10px;">
     <mat-card-header>
       <mat-card-title>{{event.Event_Name}}</mat-card-title>
       <mat-card-subtitle>{{event.Event_DateTime | date:'medium'}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src={{event.Event_Poster}} alt="Photo of a Shiba Inu">
+    <img mat-card-image src={{event.Event_Poster}} alt="Poster of {{event.Event_Name}}">
     <mat-card-content>
       <p>{{event.Event_Description  }}</p>
     </mat-card-content>

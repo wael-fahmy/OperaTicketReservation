@@ -59,7 +59,9 @@ export class CreateEventsComponent implements OnInit {
     const formJSON = this.form.getRawValue();
     formJSON.Event_DateTime.setHours(this.exportTime.hour);
     formJSON.Event_DateTime.setMinutes(this.exportTime.minute);
-    formJSON.Event_Poster = this.posterPreview;
+    formJSON.Event_DateTime = new Date(formJSON.Event_DateTime);
+    // formJSON.Event_Poster = this.posterPreview;
+    formJSON.Event_Poster = 'https://i.ibb.co/DR90x4G/F.png';
     this.isLoading = true;
     this.http.post<any>(BACKEND_URL + '/Events/Create', formJSON)
       .subscribe((serverResponse: any) => {
@@ -73,7 +75,7 @@ export class CreateEventsComponent implements OnInit {
         this.isLoading = false;
       }, error => {
         console.log(error);
-        this.errorCode = 'A01001124000';
+        this.errorCode = error.error;
         this.serverError = true;
         this.isLoading = false;
       });

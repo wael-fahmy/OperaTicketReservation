@@ -107,7 +107,7 @@
           <td mat-cell *matCellDef="let row">
             <button mat-raised-button color="primary" *ngIf="!row.Verified" (click)="verifyUser(row.ID)"> Verify </button> <br *ngIf="!row.Verified">
 
-            <button mat-raised-button color="accent" [matMenuTriggerFor]="menu">Update</button>
+            <button mat-raised-button color="accent" [matMenuTriggerFor]="menu">Update</button><br>
             <mat-menu #menu="matMenu">
               <button mat-menu-item *ngIf="row.Title != 'Site_Administrator'" (click)="updateUser(row.ID, 1)">Site Administrator</button>
               <button mat-menu-item *ngIf="row.Title != 'Opera_Management'" (click)="updateUser(row.ID, 2)">Opera Management</button>

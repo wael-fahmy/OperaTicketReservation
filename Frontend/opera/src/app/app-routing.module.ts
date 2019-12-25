@@ -53,7 +53,7 @@ const routes: Routes = [
     data: { authority: 'Opera_Management' }
   },
   {
-    path: 'cancel-event',
+    path: 'cancel-events',
     component: CancelEventComponent,
     canActivate: [RoleGuard],
     data: { authority: 'Opera_Management' }

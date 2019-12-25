@@ -48,21 +48,21 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             <span> Event_Description   </span>
           </th>
-          <td mat-cell *matCellDef="let row"> {{row.Event_Description   || "—"}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.Event_Description || "—"}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Event_Poster">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             <span> Poster </span>
           </th>
-          <td mat-cell *matCellDef="let row"> {{row.Event_Poster || "—"}} </td>
+          <td mat-cell *matCellDef="let row"> <img src="{{row.Event_Poster || '—'}}" alt="Poster of {{row.Event_Name}}" style="width: 100px;"> </td>
         </ng-container>
 
         <ng-container matColumnDef="Event_DateTime ">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             <span> Date & Time </span>
           </th>
-          <td mat-cell *matCellDef="let row"> {{row.Event_DateTime  | date:'medium' || "—"}} </td>
+          <td mat-cell *matCellDef="let row"> {{(row.Event_DateTime | date:'medium') || "—"}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Hall_Number">
